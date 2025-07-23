@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tỏ Tình Crush</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff8ac6, #ffd3ec);
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 40px;
+      text-shadow: 2px 2px #e91e63;
+    }
+
+    p {
+      font-size: 24px;
+      color: #fff;
+    }
+
+    #buttons {
+      margin-top: 40px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #fff;
+    }
+
+    #yes {
+      background-color: #ff4081;
+      color: white;
+    }
+
+    #no {
+      background-color: #ccc;
+      color: #333;
+      position: absolute;
+    }
+
+    .heart {
+      font-size: 60px;
+      color: red;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart">❤️</div>
+  <h1>Kao thích Bây lắm luôn á!</h1>
+  <p>Làm người yêu Kao nha 😳</p>
+
+  <div id="buttons">
+    <button class="btn" id="yes" onclick="accepted()">Đồng ý 💘</button>
+    <button class="btn" id="no" onmouseover="runAway()">Từ chối 😤</button>
+  </div>
+
+  <script>
+    function runAway() {
+      const noBtn = document.getElementById('no');
+      const i = Math.floor(Math.random() * window.innerHeight);
+      const j = Math.floor(Math.random() * window.innerWidth);
+      noBtn.style.top = i + 'px';
+      noBtn.style.left = j + 'px';
+    }
+
+    function accepted() {
+      document.body.innerHTML = `
+        <h1>YAYYYY!!! 😍</h1>
+        <p>Chúng mình chính thức là một đôi 💑</p>
+        <div class="heart">💗💗💗</div>
+      `;
+    }
+  </script>
+</body>
+</html>

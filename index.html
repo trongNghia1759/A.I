@@ -4,26 +4,41 @@
   <meta charset="UTF-8">
   <title>Tỏ Tình Crush</title>
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
       background: linear-gradient(135deg, #ff8ac6, #ffd3ec);
       font-family: 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
       text-align: center;
-      padding-top: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #fff5;
+      position: relative;
     }
 
     h1 {
       color: #fff;
-      font-size: 40px;
+      font-size: 36px;
       text-shadow: 2px 2px #e91e63;
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 24px;
+      font-size: 22px;
       color: #fff;
+      margin-bottom: 30px;
     }
 
     #buttons {
-      margin-top: 40px;
+      position: relative;
+      height: 100px;
     }
 
     .btn {
@@ -35,23 +50,27 @@
       margin: 10px;
       transition: 0.3s;
       box-shadow: 0 0 10px #fff;
+      position: relative;
     }
 
     #yes {
       background-color: #ff4081;
       color: white;
+      z-index: 2;
     }
 
     #no {
       background-color: #ccc;
       color: #333;
       position: absolute;
+      z-index: 1;
     }
 
     .heart {
       font-size: 60px;
       color: red;
       animation: pulse 1s infinite;
+      margin-bottom: 20px;
     }
 
     @keyframes pulse {
@@ -62,29 +81,41 @@
   </style>
 </head>
 <body>
-  <div class="heart">❤️</div>
-  <h1>Kao thích Bây lắm luôn á!</h1>
-  <p>Làm người yêu Kao nha 😳</p>
+  <div class="container">
+    <div class="heart">❤️</div>
+    <h1>Tớ thích cậu lắm luôn á!</h1>
+    <p>Làm người yêu tớ nha 😳</p>
 
-  <div id="buttons">
-    <button class="btn" id="yes" onclick="accepted()">Đồng ý 💘</button>
-    <button class="btn" id="no" onmouseover="runAway()">Từ chối 😤</button>
+    <div id="buttons">
+      <button class="btn" id="yes" onclick="accepted()">Đồng ý 💘</button>
+      <button class="btn" id="no" onmouseover="runAway()">Từ chối 😤</button>
+    </div>
   </div>
 
   <script>
+    const noBtn = document.getElementById('no');
+    const buttonsDiv = document.getElementById('buttons');
+
     function runAway() {
-      const noBtn = document.getElementById('no');
-      const i = Math.floor(Math.random() * window.innerHeight);
-      const j = Math.floor(Math.random() * window.innerWidth);
-      noBtn.style.top = i + 'px';
-      noBtn.style.left = j + 'px';
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+      const areaWidth = buttonsDiv.offsetWidth - btnWidth;
+      const areaHeight = buttonsDiv.offsetHeight - btnHeight;
+
+      const x = Math.random() * areaWidth;
+      const y = Math.random() * areaHeight;
+
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
     }
 
     function accepted() {
       document.body.innerHTML = `
-        <h1>YAYYYY!!! 😍</h1>
-        <p>Chúng mình chính thức là một đôi 💑</p>
-        <div class="heart">💗💗💗</div>
+        <div class="container">
+          <h1>YAYYYY!!! 😍</h1>
+          <p>Chúng mình chính thức là một đôi 💑</p>
+          <div class="heart">💖💖💖</div>
+        </div>
       `;
     }
   </script>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đã bị xâm nhập</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: lime;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    #warning {
+      z-index: 2;
+      position: fixed;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      animation: blink 1s infinite;
+      color: red;
+      background: black;
+    }
+    @keyframes blink {
+      0% {opacity: 0;}
+      50% {opacity: 1;}
+      100% {opacity: 0;}
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div id="warning">⚠️ CẢNH BÁO: Hệ thống đã bị xâm nhập<br>Đang xóa toàn bộ dữ liệu...</div>
+  <audio autoplay loop>
+    <source src="https://www.fesliyanstudios.com/play-mp3/4389" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // MATRIX EFFECT
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = "101010101010 HACKED ";
+    const font_size = 14;
+    const columns = canvas.width / font_size;
+    const drops = Array.from({length: columns}).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0F0";
+      ctx.font = font_size + "px Courier";
+      for(let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * font_size, drops[i] * font_size);
+        if(drops[i] * font_size > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 33);
+
+    // FULLSCREEN AUTO
+    function goFullscreen() {
+      let el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    }
+    document.addEventListener('click', goFullscreen);
+    document.addEventListener('touchstart', goFullscreen);
+
+    // NGĂN THOÁT FULLSCREEN
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        alert("Không thể thoát! Hệ thống sẽ quay lại chế độ bảo mật.");
+        goFullscreen();
+      }
+    });
+
+    // CHẶN NÚT BACK TRÊN MOBILE
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
+
+    // RUNG MÁY (nếu hỗ trợ)
+    function vibrateLoop() {
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100]);
+        setTimeout(vibrateLoop, 1000);
+      }
+    }
+    vibrateLoop();
+
+    // POPUP giả xóa dữ liệu liên tục
+    setInterval(() => {
+      alert("Đang xóa tập tin hệ thống...\nVui lòng không tắt thiết bị!");
+    }, 10000);
+  </script>
+</body>
+</html>

@@ -184,7 +184,11 @@ async function sendPrompt(){
   try{
     let response = null;
     try{
-      response = await puter.ai.chat({ model: 'gpt-4.1-nano', messages: [{ role: 'user', content: prompt }], max_tokens: 1200 });
+    const response = await fetch("https://00cd1052-a412-4ea9-a768-5cee607ff3ec-00-100shs7nm9x8k.worf.replit.dev/getkey", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: prompt })
+}).then(res => res.json());
     }catch(e){
       response = await puter.ai.chat(prompt, { model: 'gpt-4.1-nano', max_tokens: 1200 });
     }

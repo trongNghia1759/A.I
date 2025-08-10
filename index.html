@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BooChat-A.I — Dark Red</title>
+  <title>BooChat-A.I</title>
   <style>
     :root{
       --bg:#070606;
@@ -83,10 +83,10 @@ textarea#prompt{width:100%;min-height:96px;border-radius:12px;padding:12px;borde
   <div class="wrap">
     <div class="app" role="application"><aside class="sidebar" aria-label="Sidebar">
     <div class="brand">
-      <div class="logo"><b>BC</b></div>
+      <div class="logo"><b>DTN</b></div>
       <div>
-        <h3>BooChat - Dark</h3>
-        <p>AI nhỏ gọn — không cần đăng nhập</p>
+        <h3>BooChat-A.I</h3>
+        <p>AI nhỏ gọn — Phát triển bởi openAI và DTN.Bo</p>
       </div>
     </div>
 
@@ -98,7 +98,7 @@ textarea#prompt{width:100%;min-height:96px;border-radius:12px;padding:12px;borde
     <div class="convo-list" id="convoList" aria-live="polite"></div>
 
     <div class="small" style="margin-top:6px;display:flex;justify-content:space-between;align-items:center">
-      <span>Phiên bản: local • Puter.js</span>
+      <span>Phiên bản: local • 17.5.9.1</span>
       <div style="display:flex;gap:6px">
         <button class="muted-btn" id="exportBtn">Xuất</button>
         <button class="muted-btn" id="importBtn">Nhập</button>
@@ -126,7 +126,7 @@ textarea#prompt{width:100%;min-height:96px;border-radius:12px;padding:12px;borde
         <div class="send-row">
           <button class="send-btn" id="askBtn">Gửi</button>
           <button class="muted-btn" id="regenBtn">Tạo lại</button>
-          <div style="flex:1;text-align:right;color:var(--muted);font-size:13px">Lưu tại thiết bị • Không cần đăng nhập</div>
+          <div style="flex:1;text-align:right;color:var(--muted);font-size:13px">Lưu tại thiết bị • Tải câu trả lời</div>
         </div>
       </div>
     </div>
@@ -161,167 +161,41 @@ textarea#prompt{width:100%;min-height:96px;border-radius:12px;padding:12px;borde
     // Init
     function loadConversations(){
       try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        conversations = raw ? JSON.parse(raw) : [];
-      }catch(e){
-        conversations = [];
-      }
-      if(!conversations || !Array.isArray(conversations)) conversations = [];
-      if(conversations.length === 0){
-        const c = createEmptyConvo();
-        conversations.push(c);
-      }
-      currentConvoId = conversations[0].id;
-      save();
-      renderConvoList();
-      renderCurrentConversation();
-    }
-
-    function save(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
-    }
-
-    function createEmptyConvo(){
-      return { id: 'c_'+Date.now(), title: 'Cuộc trò chuyện ' + (conversations?.length+1 || 1), createdAt: Date.now(), messages: [] };
-    }
-
-    function renderConvoList(){
-      convoListEl.innerHTML = '';
-      conversations.slice().reverse().forEach(conv => {
-        const el = document.createElement('div');
-        el.className = 'convo-item';
-        el.dataset.id = conv.id;
-        el.innerHTML = `<div class="title">${escapeHtml(conv.title)}</div><div class="meta">${conv.messages.length} tin • ${new Date(conv.createdAt).toLocaleString('vi-VN')}</div>`;
-        el.addEventListener('click', ()=>{ currentConvoId = conv.id; renderCurrentConversation(); });
-        convoListEl.appendChild(el);
-      });
-    }
-
-    function renderCurrentConversation(){
-      const convo = conversations.find(c=>c.id===currentConvoId) || conversations[0];
-      if(!convo) return;
-      chatTitleEl.textContent = convo.title;
-      chatMetaEl.textContent = convo.messages.length ? (new Date(convo.messages[convo.messages.length-1].at).toLocaleString('vi-VN')) : 'Chưa có tin nhắn';
-      messagesEl.innerHTML = '';
-      convo.messages.forEach(m => {
-        const div = document.createElement('div');
-        div.className = 'msg ' + (m.role==='user' ? 'user' : 'assistant');
-        div.innerHTML = `<div class="body">${escapeHtml(m.text)}</div><span class="time">${new Date(m.at).toLocaleString('vi-VN')}</span>`;
-        messagesEl.appendChild(div);
-      });
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    function addMessageToCurrent(role, text){
-      const convo = conversations.find(c=>c.id===currentConvoId) || conversations[0];
-      convo.messages.push({ role, text, at: Date.now() });
-      convo.title = convo.messages.find(m=>m.role==='user')?.text?.slice(0,40) || convo.title;
-      save();
-      renderConvoList();
-      renderCurrentConversation();
-    }
-
-    function escapeHtml(str){
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;');
-    }
-
-    // Events
-    askBtn.addEventListener('click', sendPrompt);
-    promptEl.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendPrompt(); }
-    });
-
-    newConvoBtn.addEventListener('click', ()=>{
-      const c = createEmptyConvo();
-      conversations.push(c);
-      currentConvoId = c.id;
-      save(); renderConvoList(); renderCurrentConversation();
-    });
-
-    clearAllBtn.addEventListener('click', ()=>{
-      if(!confirm('Xoá toàn bộ cuộc trò chuyện trên thiết bị?')) return;
-      conversations = [];
-      const c = createEmptyConvo(); conversations.push(c); currentConvoId = c.id; save(); renderConvoList(); renderCurrentConversation();
-    });
-
-    exportBtn.addEventListener('click', ()=>{
-      const dataStr = JSON.stringify(conversations, null, 2);
-      const blob = new Blob([dataStr], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'boochat_export_'+Date.now()+'.json'; a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    importBtn.addEventListener('click', ()=>{
-      const input = document.createElement('input');
-      input.type='file'; input.accept='.json,application/json';
-      input.onchange = (ev)=>{
-        const f = ev.target.files[0];
-        if(!f) return;
-        const reader = new FileReader();
-        reader.onload = ()=>{
-          try{
-            const imported = JSON.parse(reader.result);
-            if(Array.isArray(imported)){
-              conversations = imported;
-              currentConvoId = conversations[0]?.id || createEmptyConvo().id;
-              save(); renderConvoList(); renderCurrentConversation();
-              alert('Nhập thành công.');
-            }else alert('Tập tin không hợp lệ.');
-          }catch(e){alert('Lỗi đọc tập tin.');}
-        };
-        reader.readAsText(f);
-      };
-      input.click();
-    });
-
-    copyConvBtn.addEventListener('click', ()=>{
-      const convo = conversations.find(c=>c.id===currentConvoId);
-      if(!convo) return;
-      const text = convo.messages.map(m=>`[${m.role}] ${new Date(m.at).toLocaleString('vi-VN')}: ${m.text}`).join('\n\n');
-      navigator.clipboard?.writeText(text).then(()=>alert('Đã sao chép cuộc trò chuyện')).catch(()=>alert('Không thể sao chép'));
-    });
-
-    deleteConvBtn.addEventListener('click', ()=>{
-      if(!confirm('Xoá cuộc trò chuyện này?')) return;
-      conversations = conversations.filter(c=>c.id!==currentConvoId);
-      if(conversations.length===0) conversations.push(createEmptyConvo());
-      currentConvoId = conversations[0].id; save(); renderConvoList(); renderCurrentConversation();
-    });
-
-    regenBtn.addEventListener('click', async ()=>{
-      // Regenerate last assistant reply by resending last user message
-      const convo = conversations.find(c=>c.id===currentConvoId);
-      if(!convo) return;
-      const lastUser = [...convo.messages].reverse().find(m=>m.role==='user');
-      if(!lastUser){ alert('Không có tin nhắn người dùng để tạo lại.'); return; }
-      promptEl.value = lastUser.text; sendPrompt();
-    });
-
-    // Core: send prompt to Puter
-    async function sendPrompt(){
-      const prompt = promptEl.value.trim();
-      if(!prompt) return;
-      if(isTyping) return alert('Đang chờ phản hồi — vui lòng đợi.');
-      addMessageToCurrent('user', prompt);
-      promptEl.value='';
-      isTyping = true;
-      const typingIndicator = document.createElement('div');
-      typingIndicator.className = 'msg assistant';
-      typingIndicator.innerHTML = `<div class="body"><em class="typing">⏳ Đang tạo phản hồi...</em></div>`;
-      messagesEl.appendChild(typingIndicator);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-
-      try{
-        // Use Puter.js chat API
-        // NOTE: keep the model name as you prefer — update if your Puter account supports other models
         const puterOptions = { model: 'gpt-4.1-nano', max_tokens: 1200 };
-        // If Puter provides streaming in your env you can adapt; here we await final text.
         const response = await puter.ai.chat(prompt, puterOptions);
-        // The shape of response may vary — attempt to coerce to string
-        const assistantText = (typeof response === 'string') ? response : (response?.text || JSON.stringify(response));
-        // replace typing indicator with final text
+
+        // Robust extractor for many Puter response shapes
+        function findFirstString(obj, seen = new WeakSet()){
+          if (obj == null) return null;
+          if (typeof obj === 'string') return obj;
+          if (typeof obj === 'number' || typeof obj === 'boolean') return String(obj);
+          if (typeof obj === 'object'){
+            if (seen.has(obj)) return null;
+            seen.add(obj);
+            if (Array.isArray(obj)){
+              for (const el of obj){ const s = findFirstString(el, seen); if (s) return s; }
+            } else {
+              // prefer these keys when present
+              const keysPriority = ['content','text','message','output','choices','parts'];
+              for (const k of keysPriority){ if (obj[k] !== undefined){ const s = findFirstString(obj[k], seen); if (s) return s; } }
+              for (const k in obj){ const s = findFirstString(obj[k], seen); if (s) return s; }
+            }
+          }
+          return null;
+        }
+
+        let assistantText = null;
+        if (typeof response === 'string') assistantText = response;
+        else {
+          // common paths returned by different APIs / SDKs
+          assistantText = response?.message?.content ?? response?.message?.content?.text ?? (Array.isArray(response?.message?.content?.parts) ? response.message.content.parts.join('
+') : null) ?? response?.choices?.[0]?.message?.content ?? response?.choices?.[0]?.message?.content?.text ?? response?.choices?.[0]?.text ?? response?.text ?? null;
+          if (Array.isArray(assistantText)) assistantText = assistantText.join('
+');
+          if (!assistantText) assistantText = findFirstString(response);
+        }
+        if (!assistantText) assistantText = '[Không có nội dung trả lời]';
+
         messagesEl.removeChild(typingIndicator);
         addMessageToCurrent('assistant', assistantText);
       }catch(err){

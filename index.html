@@ -1,52 +1,345 @@
 <!doctype html>
+
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Chat - Puter.js</title>
+  <title>BooChat-A.I — Dark Red</title>
   <style>
-    body { margin: 0; font-family: sans-serif; background: #0f1724; color: #fff;
-      display: flex; align-items: center; justify-content: center; height: 100vh; }
-    .card { background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px;
-      width: 90%; max-width: 500px; }
-    textarea { width: 100%; height: 100px; border-radius: 8px; padding: 10px;
-      border: none; background: transparent; color: #fff; }
-    button { margin-top: 10px; padding: 10px 14px; border: none;
-      background: linear-gradient(90deg,#7c3aed,#06b6d4); border-radius: 8px;
-      color: #fff; cursor: pointer; }
-    #answer { margin-top: 12px; color: #9aa4b2; white-space: pre-wrap; }
+    :root{
+      --bg:#070606;
+      --card:#0b0b0c;
+      --muted:#9aa4b2;
+      --accent:#ff2d2d;
+      --accent-2:#ff7a7a;
+      --glass: rgba(255,255,255,0.03);
+      --success:#10b981;
+      --radius:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#050304 0%, #0b0b0c 100%);color:#fff}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}.app{
+  width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:18px;padding:18px;display:grid;grid-template-columns:320px 1fr;gap:18px;box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  backdrop-filter:blur(6px);
+}
+
+/* Sidebar */
+.sidebar{background:var(--card);padding:14px;border-radius:12px;display:flex;flex-direction:column;gap:12px;height:620px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:44px;height:44px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#8b0000);box-shadow:0 6px 20px rgba(255,45,45,0.12), inset 0 -6px 24px rgba(0,0,0,0.45)}
+.logo b{font-size:18px}
+.brand h3{margin:0;font-size:16px}
+.brand p{margin:0;font-size:12px;color:var(--muted)}
+
+.controls{display:flex;gap:8px}
+.btn{flex:1;padding:8px 10px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+.btn.new{background:transparent;color:var(--accent);border:1px solid rgba(255,45,45,0.12)}
+.btn.clear{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+
+.convo-list{overflow:auto;padding:6px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);flex:1}
+.convo-item{padding:8px;border-radius:10px;display:flex;flex-direction:column;gap:4px;margin-bottom:8px;cursor:pointer}
+.convo-item:hover{background:linear-gradient(90deg, rgba(255,45,45,0.03), rgba(255,255,255,0.01))}
+.convo-item .title{font-weight:700;color:#fff}
+.convo-item .meta{font-size:12px;color:var(--muted)}
+
+.meta-actions{display:flex;gap:6px}
+.small{font-size:12px;color:var(--muted)}
+
+/* Chat area */
+.chat{background:var(--glass);padding:18px;border-radius:12px;display:flex;flex-direction:column;height:620px}
+.chat-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.chat-title{display:flex;gap:12px;align-items:center}
+.chat-title h2{margin:0}
+.chat-messages{flex:1;overflow:auto;padding:10px 6px;display:flex;flex-direction:column;gap:12px;margin-top:8px}
+
+.msg{max-width:78%;padding:12px;border-radius:12px;line-height:1.4;white-space:pre-wrap}
+.user{align-self:flex-end;background:linear-gradient(180deg,#2b2b2b,#1a1a1a);border:1px solid rgba(255,255,255,0.02)}
+.assistant{align-self:flex-start;background:linear-gradient(180deg, rgba(255,45,45,0.06), rgba(255,45,45,0.03));border:1px solid rgba(255,45,45,0.12);box-shadow:0 6px 18px rgba(255,45,45,0.03)}
+
+.msg .time{display:block;font-size:11px;color:var(--muted);margin-top:6px;text-align:right}
+
+.composer{display:flex;gap:10px;margin-top:12px}
+.input-wrap{flex:1;display:flex;flex-direction:column}
+textarea#prompt{width:100%;min-height:96px;border-radius:12px;padding:12px;border:none;background:transparent;color:#fff;outline:none;resize:vertical}
+
+.send-row{display:flex;gap:8px;align-items:center;margin-top:8px}
+.send-btn{padding:10px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));font-weight:700;cursor:pointer;box-shadow:0 6px 30px rgba(255,45,45,0.12)}
+.muted-btn{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);padding:8px 10px;border-radius:10px;cursor:pointer}
+
+.typing{font-style:italic;color:var(--muted)}
+
+/* responsive */
+@media (max-width:880px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{height:auto}
+  .chat{height:auto;margin-top:6px}
+}
+
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2>BooChat-A.I</h2>
-    <textarea id="prompt" placeholder="Gõ câu hỏi của bạn..."></textarea>
-    <button id="askBtn">Gửi</button>
-    <div id="answer">Câu trả lời sẽ hiển thị ở đây.</div>
-  </div>
+  <div class="wrap">
+    <div class="app" role="application"><aside class="sidebar" aria-label="Sidebar">
+    <div class="brand">
+      <div class="logo"><b>BC</b></div>
+      <div>
+        <h3>BooChat - Dark</h3>
+        <p>AI nhỏ gọn — không cần đăng nhập</p>
+      </div>
+    </div>
 
-  <!-- Kết nối Puter.js -->
-  <script src="https://js.puter.com/v2/"></script>
-  <script>
-    const askBtn = document.getElementById('askBtn');
+    <div class="controls">
+      <button class="btn new" id="newConvoBtn">+ Cuộc trò chuyện mới</button>
+      <button class="btn clear" id="clearAllBtn">Xoá tất cả</button>
+    </div>
+
+    <div class="convo-list" id="convoList" aria-live="polite"></div>
+
+    <div class="small" style="margin-top:6px;display:flex;justify-content:space-between;align-items:center">
+      <span>Phiên bản: local • Puter.js</span>
+      <div style="display:flex;gap:6px">
+        <button class="muted-btn" id="exportBtn">Xuất</button>
+        <button class="muted-btn" id="importBtn">Nhập</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="chat">
+    <div class="chat-header">
+      <div class="chat-title">
+        <h2 id="chatTitle">Cuộc trò chuyện mới</h2>
+        <div class="small" id="chatMeta">Chưa có tin nhắn</div>
+      </div>
+      <div class="meta-actions">
+        <button class="muted-btn" id="copyConvBtn">Sao chép</button>
+        <button class="muted-btn" id="deleteConvBtn">Xoá</button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="messages" role="log" aria-live="polite"></div>
+
+    <div class="composer">
+      <div class="input-wrap">
+        <textarea id="prompt" placeholder="Gõ câu hỏi của bạn... (Enter gửi — Shift+Enter xuống dòng)"></textarea>
+        <div class="send-row">
+          <button class="send-btn" id="askBtn">Gửi</button>
+          <button class="muted-btn" id="regenBtn">Tạo lại</button>
+          <div style="flex:1;text-align:right;color:var(--muted);font-size:13px">Lưu tại thiết bị • Không cần đăng nhập</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+  </div>  <!-- Puter.js -->  <script src="https://js.puter.com/v2/"></script>  <script>
+    // STORAGE KEY
+    const STORAGE_KEY = 'boochat_conversations_v1';
+
+    // DOM
+    const convoListEl = document.getElementById('convoList');
+    const messagesEl = document.getElementById('messages');
+    const chatTitleEl = document.getElementById('chatTitle');
+    const chatMetaEl = document.getElementById('chatMeta');
     const promptEl = document.getElementById('prompt');
-    const answerEl = document.getElementById('answer');
+    const askBtn = document.getElementById('askBtn');
+    const newConvoBtn = document.getElementById('newConvoBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const importBtn = document.getElementById('importBtn');
+    const copyConvBtn = document.getElementById('copyConvBtn');
+    const deleteConvBtn = document.getElementById('deleteConvBtn');
+    const regenBtn = document.getElementById('regenBtn');
 
-    askBtn.addEventListener('click', async () => {
-      const prompt = promptEl.value.trim();
-      if (!prompt) {
-        answerEl.textContent = 'Vui lòng nhập câu hỏi.';
-        return;
-      }
-      answerEl.textContent = '⏳ Đang tìm câu trả lời...';
+    // In-memory
+    let conversations = [];
+    let currentConvoId = null;
+    let isTyping = false;
 
-      try {
-        const response = await puter.ai.chat(prompt, { model: 'gpt-4.1-nano' });
-        answerEl.textContent = response;
-      } catch (err) {
-        answerEl.textContent = 'Lỗi khi gọi AI: ' + err.message;
+    // Init
+    function loadConversations(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        conversations = raw ? JSON.parse(raw) : [];
+      }catch(e){
+        conversations = [];
       }
+      if(!conversations || !Array.isArray(conversations)) conversations = [];
+      if(conversations.length === 0){
+        const c = createEmptyConvo();
+        conversations.push(c);
+      }
+      currentConvoId = conversations[0].id;
+      save();
+      renderConvoList();
+      renderCurrentConversation();
+    }
+
+    function save(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
+    }
+
+    function createEmptyConvo(){
+      return { id: 'c_'+Date.now(), title: 'Cuộc trò chuyện ' + (conversations?.length+1 || 1), createdAt: Date.now(), messages: [] };
+    }
+
+    function renderConvoList(){
+      convoListEl.innerHTML = '';
+      conversations.slice().reverse().forEach(conv => {
+        const el = document.createElement('div');
+        el.className = 'convo-item';
+        el.dataset.id = conv.id;
+        el.innerHTML = `<div class="title">${escapeHtml(conv.title)}</div><div class="meta">${conv.messages.length} tin • ${new Date(conv.createdAt).toLocaleString('vi-VN')}</div>`;
+        el.addEventListener('click', ()=>{ currentConvoId = conv.id; renderCurrentConversation(); });
+        convoListEl.appendChild(el);
+      });
+    }
+
+    function renderCurrentConversation(){
+      const convo = conversations.find(c=>c.id===currentConvoId) || conversations[0];
+      if(!convo) return;
+      chatTitleEl.textContent = convo.title;
+      chatMetaEl.textContent = convo.messages.length ? (new Date(convo.messages[convo.messages.length-1].at).toLocaleString('vi-VN')) : 'Chưa có tin nhắn';
+      messagesEl.innerHTML = '';
+      convo.messages.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'msg ' + (m.role==='user' ? 'user' : 'assistant');
+        div.innerHTML = `<div class="body">${escapeHtml(m.text)}</div><span class="time">${new Date(m.at).toLocaleString('vi-VN')}</span>`;
+        messagesEl.appendChild(div);
+      });
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function addMessageToCurrent(role, text){
+      const convo = conversations.find(c=>c.id===currentConvoId) || conversations[0];
+      convo.messages.push({ role, text, at: Date.now() });
+      convo.title = convo.messages.find(m=>m.role==='user')?.text?.slice(0,40) || convo.title;
+      save();
+      renderConvoList();
+      renderCurrentConversation();
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;');
+    }
+
+    // Events
+    askBtn.addEventListener('click', sendPrompt);
+    promptEl.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendPrompt(); }
     });
-  </script>
-</body>
+
+    newConvoBtn.addEventListener('click', ()=>{
+      const c = createEmptyConvo();
+      conversations.push(c);
+      currentConvoId = c.id;
+      save(); renderConvoList(); renderCurrentConversation();
+    });
+
+    clearAllBtn.addEventListener('click', ()=>{
+      if(!confirm('Xoá toàn bộ cuộc trò chuyện trên thiết bị?')) return;
+      conversations = [];
+      const c = createEmptyConvo(); conversations.push(c); currentConvoId = c.id; save(); renderConvoList(); renderCurrentConversation();
+    });
+
+    exportBtn.addEventListener('click', ()=>{
+      const dataStr = JSON.stringify(conversations, null, 2);
+      const blob = new Blob([dataStr], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'boochat_export_'+Date.now()+'.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    importBtn.addEventListener('click', ()=>{
+      const input = document.createElement('input');
+      input.type='file'; input.accept='.json,application/json';
+      input.onchange = (ev)=>{
+        const f = ev.target.files[0];
+        if(!f) return;
+        const reader = new FileReader();
+        reader.onload = ()=>{
+          try{
+            const imported = JSON.parse(reader.result);
+            if(Array.isArray(imported)){
+              conversations = imported;
+              currentConvoId = conversations[0]?.id || createEmptyConvo().id;
+              save(); renderConvoList(); renderCurrentConversation();
+              alert('Nhập thành công.');
+            }else alert('Tập tin không hợp lệ.');
+          }catch(e){alert('Lỗi đọc tập tin.');}
+        };
+        reader.readAsText(f);
+      };
+      input.click();
+    });
+
+    copyConvBtn.addEventListener('click', ()=>{
+      const convo = conversations.find(c=>c.id===currentConvoId);
+      if(!convo) return;
+      const text = convo.messages.map(m=>`[${m.role}] ${new Date(m.at).toLocaleString('vi-VN')}: ${m.text}`).join('\n\n');
+      navigator.clipboard?.writeText(text).then(()=>alert('Đã sao chép cuộc trò chuyện')).catch(()=>alert('Không thể sao chép'));
+    });
+
+    deleteConvBtn.addEventListener('click', ()=>{
+      if(!confirm('Xoá cuộc trò chuyện này?')) return;
+      conversations = conversations.filter(c=>c.id!==currentConvoId);
+      if(conversations.length===0) conversations.push(createEmptyConvo());
+      currentConvoId = conversations[0].id; save(); renderConvoList(); renderCurrentConversation();
+    });
+
+    regenBtn.addEventListener('click', async ()=>{
+      // Regenerate last assistant reply by resending last user message
+      const convo = conversations.find(c=>c.id===currentConvoId);
+      if(!convo) return;
+      const lastUser = [...convo.messages].reverse().find(m=>m.role==='user');
+      if(!lastUser){ alert('Không có tin nhắn người dùng để tạo lại.'); return; }
+      promptEl.value = lastUser.text; sendPrompt();
+    });
+
+    // Core: send prompt to Puter
+    async function sendPrompt(){
+      const prompt = promptEl.value.trim();
+      if(!prompt) return;
+      if(isTyping) return alert('Đang chờ phản hồi — vui lòng đợi.');
+      addMessageToCurrent('user', prompt);
+      promptEl.value='';
+      isTyping = true;
+      const typingIndicator = document.createElement('div');
+      typingIndicator.className = 'msg assistant';
+      typingIndicator.innerHTML = `<div class="body"><em class="typing">⏳ Đang tạo phản hồi...</em></div>`;
+      messagesEl.appendChild(typingIndicator);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+
+      try{
+        // Use Puter.js chat API
+        // NOTE: keep the model name as you prefer — update if your Puter account supports other models
+        const puterOptions = { model: 'gpt-4.1-nano', max_tokens: 1200 };
+        // If Puter provides streaming in your env you can adapt; here we await final text.
+        const response = await puter.ai.chat(prompt, puterOptions);
+        // The shape of response may vary — attempt to coerce to string
+        const assistantText = (typeof response === 'string') ? response : (response?.text || JSON.stringify(response));
+        // replace typing indicator with final text
+        messagesEl.removeChild(typingIndicator);
+        addMessageToCurrent('assistant', assistantText);
+      }catch(err){
+        messagesEl.removeChild(typingIndicator);
+        addMessageToCurrent('assistant', 'Lỗi khi gọi AI: ' + (err?.message || String(err)));
+      }finally{
+        isTyping = false;
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    }
+
+    // small helpers
+    function uid(){ return 'id_'+Math.random().toString(36).slice(2,9); }
+
+    // init
+    loadConversations();
+
+    // accessibility hint: focus prompt on load
+    promptEl.focus();
+  </script></body>
 </html>

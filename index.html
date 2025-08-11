@@ -1,179 +1,313 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BooChat-AI</title>
-  <style>
-    :root {
-      --bg: #000814;        /* Đen xanh */
-      --card: #001d3d;      /* Xanh đậm */
-      --text: #e0f7ff;      /* Xanh nhạt chữ */
-      --accent: #00b4d8;    /* Xanh dương sáng */
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: sans-serif;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    header {
-      background: var(--card);
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo-box {
-      background: var(--accent);
-      color: #000;
-      font-weight: bold;
-      font-size: 20px;
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
-    .msg-wrapper {
-      margin-bottom: 10px;
-    }
-    .msg {
-      padding: 10px;
-      border-radius: 10px;
-      max-width: 80%;
-    }
-    .msg.user {
-      background: var(--accent);
-      color: #000;
-      align-self: flex-end;
-    }
-    .msg.assistant {
-      background: var(--card);
-      border: 1px solid var(--accent);
-    }
-    .meta {
-      font-size: 12px;
-      opacity: 0.6;
-      margin-top: 2px;
-    }
-    footer {
-      background: var(--card);
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    footer input {
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-      flex: 1;
-    }
-    footer button {
-      padding: 8px 12px;
-      background: var(--accent);
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .version {
-      font-size: 12px;
-      text-align: center;
-      opacity: 0.5;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - Trải nghiệm tức thì</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: auto;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #161b22;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            max-height: 90vh;
+            margin: 20px;
+        }
+        .header {
+            background-color: #1f2428;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 2px solid #238636;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 700;
+            color: #fff;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .chat-box::-webkit-scrollbar {
+            display: none;
+        }
+        .message {
+            display: flex;
+        }
+        .message.user {
+            justify-content: flex-end;
+        }
+        .message.ai {
+            justify-content: flex-start;
+        }
+        .message-content {
+            padding: 0.8rem 1.2rem;
+            border-radius: 18px;
+            max-width: 75%;
+            word-wrap: break-word;
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .message.user .message-content {
+            background-color: #238636;
+            color: #ffffff;
+            border-bottom-right-radius: 0;
+        }
+        .message.ai .message-content {
+            background-color: #21262d;
+            color: #c9d1d9;
+            border-bottom-left-radius: 0;
+        }
+        .input-area {
+            padding: 1rem;
+            background-color: #1f2428;
+            display: flex;
+            gap: 1rem;
+            border-top: 2px solid #238636;
+            align-items: center;
+        }
+        .input-area input {
+            flex: 1;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 0.75rem 1.25rem;
+            color: #c9d1d9;
+            transition: all 0.2s ease-in-out;
+        }
+        .input-area input:focus {
+            outline: none;
+            border-color: #238636;
+            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+        }
+        .input-area button {
+            background-color: #238636;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease-in-out;
+        }
+        .input-area button:hover {
+            background-color: #2ea043;
+            transform: scale(1.05);
+        }
+        .api-key-setup {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+            height: 100%;
+            justify-content: center;
+        }
+        .api-key-setup h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .api-key-setup p {
+            font-size: 1rem;
+            color: #8b949e;
+        }
+        .api-key-setup .btn-primary {
+            background-color: #238636;
+            border-color: #238636;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+        }
+        .api-key-setup .btn-primary:hover {
+            background-color: #2ea043;
+            border-color: #2ea043;
+        }
+        .api-key-input {
+            width: 100%;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 0.75rem 1.25rem;
+            color: #c9d1d9;
+            transition: all 0.2s ease-in-out;
+        }
+        .api-key-input:focus {
+            outline: none;
+            border-color: #238636;
+            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo-box">UP2</div>
-    <h1>BooChat-A.I</h1>
-  </header>
 
-  <main id="messages"></main>
+    <div class="chat-container" id="chat-container">
+        
+        <div class="api-key-setup" id="api-key-setup-div">
+            <h2>Thiết lập API Key</h2>
+            <p>Vui lòng dán API Key của OpenAI để bắt đầu trò chuyện. <br> Key này sẽ chỉ được lưu trong trình duyệt của bạn.</p>
+            <input type="password" class="form-control api-key-input" id="api-key-input" placeholder="Dán API Key của bạn vào đây">
+            <button class="btn btn-primary" id="save-key-btn">Lưu và Bắt đầu</button>
+        </div>
 
-  <footer>
-    <div style="display: flex; gap: 5px;">
-      <input id="prompt" type="text" placeholder="Nhập tin nhắn..." />
-      <button onclick="sendPrompt()">Gửi</button>
+        <div class="chat-interface" id="chat-interface-div" style="display: none;">
+            <div class="header">
+                <h1>AI Chatbot <i class="fa-solid fa-robot"></i></h1>
+            </div>
+            <div class="chat-box" id="chat-box">
+                <div class="message ai">
+                    <div class="message-content">Chào bạn! Tôi là một trợ lý AI. Bạn muốn trò chuyện về điều gì?</div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="user-input" class="form-control" placeholder="Nhập tin nhắn của bạn...">
+                <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
     </div>
-    <div class="version">Phiên bản 17.5.9.2</div>
-  </footer>
 
-  <script>
-    const promptEl = document.getElementById('prompt');
-    const messagesEl = document.getElementById('messages');
-    let isTyping = false;
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_KEY_STORAGE_KEY = 'openaiApiKey';
+        const apiKeySetupDiv = document.getElementById('api-key-setup-div');
+        const chatInterfaceDiv = document.getElementById('chat-interface-div');
+        const apiKeyInput = document.getElementById('api-key-input');
+        const saveKeyBtn = document.getElementById('save-key-btn');
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        let API_KEY = '';
 
-    function addMessageToCurrent(sender, text) {
-      const wrap = document.createElement('div');
-      wrap.className = 'msg-wrapper';
-      const msg = document.createElement('div');
-      msg.className = 'msg ' + sender;
-      msg.textContent = text;
-      wrap.appendChild(msg);
-      const meta = document.createElement('div');
-      meta.className = 'meta';
-      meta.textContent = sender === 'user' ? 'Bạn' : 'AI';
-      wrap.appendChild(meta);
-      messagesEl.appendChild(wrap);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
+        // Tải API Key đã lưu từ trình duyệt (nếu có)
+        function loadApiKey() {
+            API_KEY = localStorage.getItem(API_KEY_STORAGE_KEY);
+            if (API_KEY) {
+                apiKeySetupDiv.style.display = 'none';
+                chatInterfaceDiv.style.display = 'flex';
+            } else {
+                apiKeySetupDiv.style.display = 'flex';
+                chatInterfaceDiv.style.display = 'none';
+            }
+        }
 
-    function extractAssistantText(data) {
-      try {
-        if (typeof data === 'string') return data;
-        if (data?.output?.text) return data.output.text;
-        if (data?.text) return data.text;
-        return JSON.stringify(data);
-      } catch {
-        return '';
-      }
-    }
-
-    async function sendPrompt() {
-      const prompt = promptEl.value.trim();
-      if (!prompt) return;
-      if (isTyping) return alert('Đang chờ phản hồi — vui lòng đợi.');
-
-      addMessageToCurrent('user', prompt);
-      promptEl.value = '';
-      isTyping = true;
-
-      const typingWrap = document.createElement('div');
-      typingWrap.className = 'msg-wrapper';
-      const typingMsg = document.createElement('div');
-      typingMsg.className = 'msg assistant';
-      typingMsg.innerHTML = '<em>⏳ Đang tạo phản hồi...</em>';
-      typingWrap.appendChild(typingMsg);
-      messagesEl.appendChild(typingWrap);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-
-      try {
-        let res = await fetch("https://00cd1052-a412-4ea9-a768-5cee607ff3ec-00-100shs7nm9x8k.worf.replit.dev/ask", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt })
+        // Lưu API Key và chuyển sang giao diện chat
+        saveKeyBtn.addEventListener('click', () => {
+            const key = apiKeyInput.value.trim();
+            if (key) {
+                localStorage.setItem(API_KEY_STORAGE_KEY, key);
+                loadApiKey();
+            } else {
+                alert('Vui lòng nhập API Key.');
+            }
         });
-        let data = await res.json();
-        const assistantText = extractAssistantText(data) || '[Không có nội dung trả lời]';
 
-        typingWrap.remove();
-        addMessageToCurrent('assistant', assistantText);
+        // Xử lý gửi tin nhắn
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
 
-      } catch (err) {
-        typingWrap.remove();
-        addMessageToCurrent('assistant', 'Lỗi khi gọi AI: ' + (err?.message || err));
-      } finally {
-        isTyping = false;
-      }
-    }
-  </script>
+            // Hiển thị tin nhắn người dùng
+            appendMessage(message, 'user');
+            userInput.value = '';
+
+            // Hiển thị tin nhắn chờ của AI
+            const thinkingMessageElement = appendMessage('Đang nghĩ...', 'ai');
+
+            // Gọi API OpenAI
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        messages: [{ role: 'user', content: message }],
+                        max_tokens: 150,
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error.message || 'Có lỗi xảy ra khi gọi API.');
+                }
+
+                const data = await response.json();
+                const aiReply = data.choices[0].message.content.trim();
+                
+                // Cập nhật tin nhắn chờ bằng câu trả lời từ AI
+                thinkingMessageElement.querySelector('.message-content').innerText = aiReply;
+
+            } catch (error) {
+                console.error('Lỗi khi gọi API:', error);
+                thinkingMessageElement.querySelector('.message-content').innerText = `Lỗi: ${error.message}`;
+            }
+            
+            // Cuộn xuống cuối hộp chat
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Thêm tin nhắn vào hộp chat
+        function appendMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender);
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('message-content');
+            contentDiv.innerText = text;
+            
+            messageDiv.appendChild(contentDiv);
+            chatBox.appendChild(messageDiv);
+            
+            // Cuộn xuống cuối hộp chat
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            return messageDiv; // Trả về element để có thể cập nhật sau này
+        }
+
+        // Bắt sự kiện click nút gửi
+        sendBtn.addEventListener('click', sendMessage);
+
+        // Bắt sự kiện nhấn Enter trong input
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Tải API Key khi trang được mở
+        window.addEventListener('DOMContentLoaded', loadApiKey);
+
+    </script>
 </body>
 </html>

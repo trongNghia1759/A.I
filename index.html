@@ -20,6 +20,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 0;
             overflow: auto;
         }
         .chat-container {
@@ -33,6 +34,14 @@
             overflow: hidden;
             max-height: 90vh;
             margin: 20px;
+        }
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 0;
+                border-radius: 0;
+                height: 100vh;
+                max-height: 100vh;
+            }
         }
         .header {
             background-color: #1f2428;
@@ -76,6 +85,7 @@
             word-wrap: break-word;
             line-height: 1.5;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 0.95rem;
         }
         .message.user .message-content {
             background-color: #238636;
@@ -181,7 +191,7 @@
 
         <div class="chat-interface" id="chat-interface-div" style="display: none;">
             <div class="header">
-                <h1>AI Chatbot <i class="fa-solid fa-robot"></i></h1>
+                <h1>Boo-A.I Chatbot <i class="fa-solid fa-robot"></i></h1>
             </div>
             <div class="chat-box" id="chat-box">
                 <div class="message ai">

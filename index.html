@@ -7,33 +7,52 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        :root {
+            --bg-color-main: #121212;
+            --bg-color-card: #1e1e1e;
+            --text-color: #e0e0e0;
+            --primary-color: #007bff;
+            --primary-color-hover: #0056b3;
+            --border-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --chat-user: #007bff;
+            --chat-ai: #333;
+        }
+
         body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color-main);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 0;
-            overflow: auto;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
         }
         .chat-container {
             width: 100%;
             max-width: 800px;
-            background-color: #161b22;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            background-color: var(--bg-color-card);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow-color);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             max-height: 90vh;
             margin: 20px;
+            transform: scale(1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
         @media (max-width: 768px) {
             .chat-container {
@@ -44,17 +63,46 @@
             }
         }
         .header {
-            background-color: #1f2428;
-            padding: 1rem;
+            background-color: #2a2a2a;
+            padding: 1.25rem;
             text-align: center;
-            border-bottom: 2px solid #238636;
+            border-bottom: 2px solid var(--primary-color);
             position: relative;
         }
         .header h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin: 0;
             font-weight: 700;
             color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .header h1 .fa-robot {
+            font-size: 1.3rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .logout-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .logout-btn:hover {
+            color: var(--primary-color);
+            transform: translateY(-50%) scale(1.1);
         }
         .chat-box {
             flex: 1;
@@ -71,6 +119,12 @@
         }
         .message {
             display: flex;
+            align-items: flex-start;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         .message.user {
             justify-content: flex-end;
@@ -79,102 +133,111 @@
             justify-content: flex-start;
         }
         .message-content {
-            padding: 0.8rem 1.2rem;
-            border-radius: 18px;
-            max-width: 75%;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            max-width: 85%;
             word-wrap: break-word;
-            line-height: 1.5;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            line-height: 1.6;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             font-size: 0.95rem;
         }
         .message.user .message-content {
-            background-color: #238636;
-            color: #ffffff;
-            border-bottom-right-radius: 0;
+            background-color: var(--chat-user);
+            color: #fff;
+            border-bottom-right-radius: 5px;
         }
         .message.ai .message-content {
-            background-color: #21262d;
-            color: #c9d1d9;
-            border-bottom-left-radius: 0;
+            background-color: var(--chat-ai);
+            color: var(--text-color);
+            border-bottom-left-radius: 5px;
         }
         .input-area {
-            padding: 1rem;
-            background-color: #1f2428;
+            padding: 1.5rem;
+            background-color: #2a2a2a;
             display: flex;
             gap: 1rem;
-            border-top: 2px solid #238636;
+            border-top: 2px solid var(--primary-color);
             align-items: center;
         }
         .input-area input {
             flex: 1;
-            background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 20px;
-            padding: 0.75rem 1.25rem;
-            color: #c9d1d9;
+            background-color: var(--bg-color-main);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 0.85rem 1.5rem;
+            color: var(--text-color);
             transition: all 0.2s ease-in-out;
+            font-size: 1rem;
         }
         .input-area input:focus {
             outline: none;
-            border-color: #238636;
-            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
         }
         .input-area button {
-            background-color: #238636;
+            background-color: var(--primary-color);
             border: none;
             color: white;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            width: 50px;
+            height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: all 0.2s ease-in-out;
+            font-size: 1.2rem;
+            cursor: pointer;
         }
         .input-area button:hover {
-            background-color: #2ea043;
-            transform: scale(1.05);
+            background-color: var(--primary-color-hover);
+            transform: scale(1.1);
         }
         .api-key-setup {
             padding: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
             text-align: center;
             height: 100%;
             justify-content: center;
         }
         .api-key-setup h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
         }
         .api-key-setup p {
             font-size: 1rem;
-            color: #8b949e;
+            color: #b0b0b0;
+            line-height: 1.6;
         }
         .api-key-setup .btn-primary {
-            background-color: #238636;
-            border-color: #238636;
-            font-weight: bold;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
             transition: all 0.2s ease-in-out;
+            margin-top: 1rem;
         }
         .api-key-setup .btn-primary:hover {
-            background-color: #2ea043;
-            border-color: #2ea043;
+            background-color: var(--primary-color-hover);
+            border-color: var(--primary-color-hover);
+            transform: translateY(-2px);
         }
         .api-key-input {
             width: 100%;
-            background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 20px;
-            padding: 0.75rem 1.25rem;
-            color: #c9d1d9;
+            background-color: #2a2a2a;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 0.85rem 1.5rem;
+            color: var(--text-color);
             transition: all 0.2s ease-in-out;
+            font-size: 1rem;
         }
         .api-key-input:focus {
             outline: none;
-            border-color: #238636;
-            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
         }
     </style>
 </head>
@@ -184,14 +247,15 @@
         
         <div class="api-key-setup" id="api-key-setup-div">
             <h2>Thiết lập API Key</h2>
-            <p>Vui lòng dán API Key của OpenAI để bắt đầu trò chuyện. <br> Key này sẽ chỉ được lưu trong trình duyệt của bạn.</p>
+            <p>Vui lòng dán API Key của openAI để bắt đầu trò chuyện.<br>Key chỉ được lưu trong trình duyệt của bạn.</p>
             <input type="password" class="form-control api-key-input" id="api-key-input" placeholder="Dán API Key của bạn vào đây">
             <button class="btn btn-primary" id="save-key-btn">Lưu và Bắt đầu</button>
         </div>
 
         <div class="chat-interface" id="chat-interface-div" style="display: none;">
             <div class="header">
-                <h1>Boo-A.I Chatbot <i class="fa-solid fa-robot"></i></h1>
+                <h1><i class="fa-solid fa-robot"></i> AI Chatbot</h1>
+                <button class="logout-btn" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
             <div class="chat-box" id="chat-box">
                 <div class="message ai">
@@ -212,6 +276,7 @@
         const chatInterfaceDiv = document.getElementById('chat-interface-div');
         const apiKeyInput = document.getElementById('api-key-input');
         const saveKeyBtn = document.getElementById('save-key-btn');
+        const logoutBtn = document.getElementById('logout-btn');
         const chatBox = document.getElementById('chat-box');
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
@@ -240,6 +305,19 @@
             }
         });
 
+        // Đăng xuất và xóa API Key
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem(API_KEY_STORAGE_KEY);
+            apiKeyInput.value = ''; // Xóa giá trị trong ô input
+            loadApiKey();
+            // Xóa tất cả tin nhắn cũ
+            chatBox.innerHTML = `
+                <div class="message ai">
+                    <div class="message-content">Chào bạn! Tôi là một trợ lý AI. Bạn muốn trò chuyện về điều gì?</div>
+                </div>
+            `;
+        });
+
         // Xử lý gửi tin nhắn
         async function sendMessage() {
             const message = userInput.value.trim();
@@ -250,7 +328,7 @@
             userInput.value = '';
 
             // Hiển thị tin nhắn chờ của AI
-            const thinkingMessageElement = appendMessage('Đang nghĩ...', 'ai');
+            const thinkingMessageElement = appendMessage('...', 'ai');
 
             // Gọi API OpenAI
             try {

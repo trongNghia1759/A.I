@@ -168,8 +168,8 @@ body {
 <div class="chat-container">
     <div class="api-key-setup" id="api-key-setup-div">
         <h2>Thiết lập API Key</h2>
-        <p>Vui lòng dán API Key của OpenAI để bắt đầu trò chuyện.<br>Key chỉ được lưu trong trình duyệt của bạn.</p>
-        <input type="password" class="api-key-input" id="api-key-input" placeholder="Dán API Key của bạn vào đây">
+        <p>Vui lòng dán API Key của Google Gemini để bắt đầu trò chuyện.<br>Key chỉ được lưu trong trình duyệt của bạn.</p>
+        <input type="password" class="api-key-input" id="api-key-input" placeholder="Dán Gemini API Key của bạn vào đây">
         <button class="btn btn-primary" id="save-key-btn">Lưu và Bắt đầu</button>
     </div>
 
@@ -191,7 +191,7 @@ body {
 </div>
 
 <script>
-const API_KEY_STORAGE_KEY = 'openaiApiKey';
+const API_KEY_STORAGE_KEY = 'geminiApiKey';
 const apiKeySetupDiv = document.getElementById('api-key-setup-div');
 const chatInterfaceDiv = document.getElementById('chat-interface-div');
 const apiKeyInput = document.getElementById('api-key-input');
@@ -234,16 +234,18 @@ async function sendMessage() {
     userInput.value = '';
     const thinkingMessage = appendMessage('...', 'ai');
     try {
-        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${API_KEY}`;
+        const res = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
-                messages: [{ role: 'user', content: message }],
-                max_tokens: 150
+                "contents": [
+                    {
+                        "parts": [
+                            { "text": message }
+                        ]
+                    }
+                ]
             })
         });
         if (!res.ok) {
@@ -251,8 +253,10 @@ async function sendMessage() {
             throw new Error(errData.error.message || 'Lỗi API.');
         }
         const data = await res.json();
-        thinkingMessage.querySelector('.message-content').innerText = data.choices[0].message.content.trim();
+        const aiReply = data.candidates[0].content.parts[0].text.trim();
+        thinkingMessage.querySelector('.message-content').innerText = aiReply;
     } catch (err) {
+        console.error('Lỗi khi gọi API:', err);
         thinkingMessage.querySelector('.message-content').innerText = `Lỗi: ${err.message}`;
     }
     chatBox.scrollTop = chatBox.scrollHeight;

@@ -1,401 +1,276 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot - Trải nghiệm tức thì</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-color-main: #121212;
-            --bg-color-card: #1e1e1e;
-            --text-color: #e0e0e0;
-            --primary-color: #007bff;
-            --primary-color-hover: #0056b3;
-            --border-color: #333;
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --chat-user: #007bff;
-            --chat-ai: #333;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Chatbot - Trải nghiệm tức thì</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --bg-main: #0f1116;
+    --bg-card: #1a1d23;
+    --text: #f1f1f1;
+    --primary: #4a90e2;
+    --primary-hover: #357abd;
+    --border: #2c2f36;
+    --chat-user: #4a90e2;
+    --chat-ai: #2b2f36;
+}
 
-        body {
-            background-color: var(--bg-color-main);
-            color: var(--text-color);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            transition: background-color 0.3s ease;
-        }
-        .chat-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--bg-color-card);
-            border-radius: 16px;
-            box-shadow: 0 8px 30px var(--shadow-color);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            max-height: 90vh;
-            margin: 20px;
-            transform: scale(1);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @media (max-width: 768px) {
-            .chat-container {
-                margin: 0;
-                border-radius: 0;
-                height: 100vh;
-                max-height: 100vh;
-            }
-        }
-        .header {
-            background-color: #2a2a2a;
-            padding: 1.25rem;
-            text-align: center;
-            border-bottom: 2px solid var(--primary-color);
-            position: relative;
-        }
-        .header h1 {
-            font-size: 1.6rem;
-            margin: 0;
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        .header h1 .fa-robot {
-            font-size: 1.3rem;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        .logout-btn {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-        .logout-btn:hover {
-            color: var(--primary-color);
-            transform: translateY(-50%) scale(1.1);
-        }
-        .chat-box {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .chat-box::-webkit-scrollbar {
-            display: none;
-        }
-        .message {
-            display: flex;
-            align-items: flex-start;
-            animation: slideIn 0.3s ease-out;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .message.user {
-            justify-content: flex-end;
-        }
-        .message.ai {
-            justify-content: flex-start;
-        }
-        .message-content {
-            padding: 1rem 1.5rem;
-            border-radius: 20px;
-            max-width: 85%;
-            word-wrap: break-word;
-            line-height: 1.6;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            font-size: 0.95rem;
-        }
-        .message.user .message-content {
-            background-color: var(--chat-user);
-            color: #fff;
-            border-bottom-right-radius: 5px;
-        }
-        .message.ai .message-content {
-            background-color: var(--chat-ai);
-            color: var(--text-color);
-            border-bottom-left-radius: 5px;
-        }
-        .input-area {
-            padding: 1.5rem;
-            background-color: #2a2a2a;
-            display: flex;
-            gap: 1rem;
-            border-top: 2px solid var(--primary-color);
-            align-items: center;
-        }
-        .input-area input {
-            flex: 1;
-            background-color: var(--bg-color-main);
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            padding: 0.85rem 1.5rem;
-            color: var(--text-color);
-            transition: all 0.2s ease-in-out;
-            font-size: 1rem;
-        }
-        .input-area input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
-        }
-        .input-area button {
-            background-color: var(--primary-color);
-            border: none;
-            color: white;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.2s ease-in-out;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .input-area button:hover {
-            background-color: var(--primary-color-hover);
-            transform: scale(1.1);
-        }
-        .api-key-setup {
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            text-align: center;
-            height: 100%;
-            justify-content: center;
-        }
-        .api-key-setup h2 {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-        .api-key-setup p {
-            font-size: 1rem;
-            color: #b0b0b0;
-            line-height: 1.6;
-        }
-        .api-key-setup .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            transition: all 0.2s ease-in-out;
-            margin-top: 1rem;
-        }
-        .api-key-setup .btn-primary:hover {
-            background-color: var(--primary-color-hover);
-            border-color: var(--primary-color-hover);
-            transform: translateY(-2px);
-        }
-        .api-key-input {
-            width: 100%;
-            background-color: #2a2a2a;
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            padding: 0.85rem 1.5rem;
-            color: var(--text-color);
-            transition: all 0.2s ease-in-out;
-            font-size: 1rem;
-        }
-        .api-key-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
-        }
-    </style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-main);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.chat-container {
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn { from{opacity:0; transform:scale(0.97);} to{opacity:1; transform:scale(1);} }
+.header {
+    background: var(--primary);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    position: relative;
+}
+.header .fa-robot { animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+.logout-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.logout-btn:hover { color: var(--bg-card); }
+.chat-box {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    scroll-behavior: smooth;
+}
+.message {
+    display: flex;
+    align-items: flex-start;
+    animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from{opacity:0; transform:translateY(5px);} to{opacity:1; transform:translateY(0);} }
+.message-content {
+    padding: 0.8rem 1.2rem;
+    border-radius: 16px;
+    max-width: 80%;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+.user .message-content {
+    background: var(--chat-user);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+    margin-left: auto;
+}
+.ai .message-content {
+    background: var(--chat-ai);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+}
+.input-area {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+}
+.input-area input {
+    flex: 1;
+    border: none;
+    border-radius: 25px;
+    padding: 0.7rem 1.2rem;
+    background: var(--bg-main);
+    color: var(--text);
+}
+.input-area input:focus { outline: 2px solid var(--primary); }
+.input-area button {
+    background: var(--primary);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.input-area button:hover { background: var(--primary-hover); }
+.api-key-setup {
+    padding: 2rem;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+.api-key-input {
+    padding: 0.7rem 1rem;
+    border-radius: 25px;
+    border: 1px solid var(--border);
+    background: var(--bg-main);
+    color: var(--text);
+}
+.api-key-input:focus { outline: 2px solid var(--primary); }
+.btn-primary {
+    background: var(--primary);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 25px;
+    font-weight: 600;
+}
+.btn-primary:hover { background: var(--primary-hover); }
+@media (max-width: 768px) {
+    .chat-container { border-radius: 0; max-height: 100vh; }
+    .message-content { max-width: 90%; font-size: 0.95rem; }
+}
+</style>
 </head>
 <body>
 
-    <div class="chat-container" id="chat-container">
-        
-        <div class="api-key-setup" id="api-key-setup-div">
-            <h2>Thiết lập API Key</h2>
-            <p>Vui lòng dán API Key của openAI để bắt đầu trò chuyện.<br>Key chỉ được lưu trong trình duyệt của bạn.</p>
-            <input type="password" class="form-control api-key-input" id="api-key-input" placeholder="Dán API Key của bạn vào đây">
-            <button class="btn btn-primary" id="save-key-btn">Lưu và Bắt đầu</button>
-        </div>
-
-        <div class="chat-interface" id="chat-interface-div" style="display: none;">
-            <div class="header">
-                <h1><i class="fa-solid fa-robot"></i> AI Chatbot</h1>
-                <button class="logout-btn" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></button>
-            </div>
-            <div class="chat-box" id="chat-box">
-                <div class="message ai">
-                    <div class="message-content">Chào bạn! Tôi là một trợ lý AI. Bạn muốn trò chuyện về điều gì?</div>
-                </div>
-            </div>
-            <div class="input-area">
-                <input type="text" id="user-input" class="form-control" placeholder="Nhập tin nhắn của bạn...">
-                <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
-        </div>
+<div class="chat-container">
+    <div class="api-key-setup" id="api-key-setup-div">
+        <h2>Thiết lập API Key</h2>
+        <p>Vui lòng dán API Key của OpenAI để bắt đầu trò chuyện.<br>Key chỉ được lưu trong trình duyệt của bạn.</p>
+        <input type="password" class="api-key-input" id="api-key-input" placeholder="Dán API Key của bạn vào đây">
+        <button class="btn btn-primary" id="save-key-btn">Lưu và Bắt đầu</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_KEY_STORAGE_KEY = 'openaiApiKey';
-        const apiKeySetupDiv = document.getElementById('api-key-setup-div');
-        const chatInterfaceDiv = document.getElementById('chat-interface-div');
-        const apiKeyInput = document.getElementById('api-key-input');
-        const saveKeyBtn = document.getElementById('save-key-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const chatBox = document.getElementById('chat-box');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        let API_KEY = '';
+    <div class="chat-interface" id="chat-interface-div" style="display: none; flex-direction: column; height: 100%;">
+        <div class="header">
+            <i class="fa-solid fa-robot"></i> AI Chatbot
+            <button class="logout-btn" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message ai">
+                <div class="message-content">Chào bạn! Tôi là một trợ lý AI. Bạn muốn trò chuyện về điều gì?</div>
+            </div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Nhập tin nhắn của bạn...">
+            <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
 
-        // Tải API Key đã lưu từ trình duyệt (nếu có)
-        function loadApiKey() {
-            API_KEY = localStorage.getItem(API_KEY_STORAGE_KEY);
-            if (API_KEY) {
-                apiKeySetupDiv.style.display = 'none';
-                chatInterfaceDiv.style.display = 'flex';
-            } else {
-                apiKeySetupDiv.style.display = 'flex';
-                chatInterfaceDiv.style.display = 'none';
-            }
-        }
+<script>
+const API_KEY_STORAGE_KEY = 'openaiApiKey';
+const apiKeySetupDiv = document.getElementById('api-key-setup-div');
+const chatInterfaceDiv = document.getElementById('chat-interface-div');
+const apiKeyInput = document.getElementById('api-key-input');
+const saveKeyBtn = document.getElementById('save-key-btn');
+const logoutBtn = document.getElementById('logout-btn');
+const chatBox = document.getElementById('chat-box');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+let API_KEY = '';
 
-        // Lưu API Key và chuyển sang giao diện chat
-        saveKeyBtn.addEventListener('click', () => {
-            const key = apiKeyInput.value.trim();
-            if (key) {
-                localStorage.setItem(API_KEY_STORAGE_KEY, key);
-                loadApiKey();
-            } else {
-                alert('Vui lòng nhập API Key.');
-            }
+function loadApiKey() {
+    API_KEY = localStorage.getItem(API_KEY_STORAGE_KEY);
+    if (API_KEY) {
+        apiKeySetupDiv.style.display = 'none';
+        chatInterfaceDiv.style.display = 'flex';
+    } else {
+        apiKeySetupDiv.style.display = 'flex';
+        chatInterfaceDiv.style.display = 'none';
+    }
+}
+saveKeyBtn.addEventListener('click', () => {
+    const key = apiKeyInput.value.trim();
+    if (key) {
+        localStorage.setItem(API_KEY_STORAGE_KEY, key);
+        loadApiKey();
+    } else {
+        alert('Vui lòng nhập API Key.');
+    }
+});
+logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem(API_KEY_STORAGE_KEY);
+    apiKeyInput.value = '';
+    loadApiKey();
+    chatBox.innerHTML = `<div class="message ai"><div class="message-content">Chào bạn! Tôi là một trợ lý AI. Bạn muốn trò chuyện về điều gì?</div></div>`;
+});
+async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+    appendMessage(message, 'user');
+    userInput.value = '';
+    const thinkingMessage = appendMessage('...', 'ai');
+    try {
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`
+            },
+            body: JSON.stringify({
+                model: 'gpt-3.5-turbo',
+                messages: [{ role: 'user', content: message }],
+                max_tokens: 150
+            })
         });
-
-        // Đăng xuất và xóa API Key
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem(API_KEY_STORAGE_KEY);
-            apiKeyInput.value = ''; // Xóa giá trị trong ô input
-            loadApiKey();
-            // Xóa tất cả tin nhắn cũ
-            chatBox.innerHTML = `
-                <div class="message ai">
-                    <div class="message-content">Chào bạn! Tôi là một trợ lý AI. Bạn muốn trò chuyện về điều gì?</div>
-                </div>
-            `;
-        });
-
-        // Xử lý gửi tin nhắn
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            if (message === '') return;
-
-            // Hiển thị tin nhắn người dùng
-            appendMessage(message, 'user');
-            userInput.value = '';
-
-            // Hiển thị tin nhắn chờ của AI
-            const thinkingMessageElement = appendMessage('...', 'ai');
-
-            // Gọi API OpenAI
-            try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
-                        messages: [{ role: 'user', content: message }],
-                        max_tokens: 150,
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || 'Có lỗi xảy ra khi gọi API.');
-                }
-
-                const data = await response.json();
-                const aiReply = data.choices[0].message.content.trim();
-                
-                // Cập nhật tin nhắn chờ bằng câu trả lời từ AI
-                thinkingMessageElement.querySelector('.message-content').innerText = aiReply;
-
-            } catch (error) {
-                console.error('Lỗi khi gọi API:', error);
-                thinkingMessageElement.querySelector('.message-content').innerText = `Lỗi: ${error.message}`;
-            }
-            
-            // Cuộn xuống cuối hộp chat
-            chatBox.scrollTop = chatBox.scrollHeight;
+        if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.error.message || 'Lỗi API.');
         }
-
-        // Thêm tin nhắn vào hộp chat
-        function appendMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', sender);
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.classList.add('message-content');
-            contentDiv.innerText = text;
-            
-            messageDiv.appendChild(contentDiv);
-            chatBox.appendChild(messageDiv);
-            
-            // Cuộn xuống cuối hộp chat
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            return messageDiv; // Trả về element để có thể cập nhật sau này
-        }
-
-        // Bắt sự kiện click nút gửi
-        sendBtn.addEventListener('click', sendMessage);
-
-        // Bắt sự kiện nhấn Enter trong input
-        userInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-        
-        // Tải API Key khi trang được mở
-        window.addEventListener('DOMContentLoaded', loadApiKey);
-
-    </script>
+        const data = await res.json();
+        thinkingMessage.querySelector('.message-content').innerText = data.choices[0].message.content.trim();
+    } catch (err) {
+        thinkingMessage.querySelector('.message-content').innerText = `Lỗi: ${err.message}`;
+    }
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', sender);
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('message-content');
+    contentDiv.innerText = text;
+    msgDiv.appendChild(contentDiv);
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return msgDiv;
+}
+sendBtn.addEventListener('click', sendMessage);
+userInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+window.addEventListener('DOMContentLoaded', loadApiKey);
+</script>
 </body>
 </html>

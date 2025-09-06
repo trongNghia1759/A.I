@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trang Cá Nhân</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap" rel="stylesheet">
+  <title>trang cá nhân</title>
+  <link href="https://trongnghia1759.github.io/" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Fredoka', sans-serif;
+      font-family: 'fredoka', sans-serif;
     }
 
     body {
@@ -52,7 +52,7 @@
     }
 
     .desc {
-      color: #00f7ff;
+      color: #ff0000; /* Changed to red */
       margin-top: 10px;
       line-height: 1.6;
       font-size: 13px;
@@ -60,17 +60,17 @@
 
     .divider {
       border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 0, 0, 0.5); /* Changed to red */
       width: 80%;
       margin: 20px auto;
-      box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 4px rgba(255, 0, 0, 0.5); /* Changed to red */
     }
 
     .zalo-box {
       margin: 15px 0;
       font-weight: bold;
-      color: #000;
-      background: #00f7ff;
+      color: #fff; /* Changed to white for contrast */
+      background: #ff0000; /* Changed to red */
       display: inline-block;
       padding: 6px 12px;
       border-radius: 10px;
@@ -78,113 +78,101 @@
     }
 
     .button {
-  display: block;
-  margin: 8px auto;
-  width: 85%;
-  max-width: 240px;
-  background: #000;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  border: 2px solid hotpink;
-  font-size: 12px;
-  transition: 0.3s;
-  text-decoration: none;
-  box-shadow: 0 0 4px hotpink;
-  outline: none;
-  -webkit-tap-highlight-color: transparent; /* Chặn viền xanh khi tap trên thiết bị cảm ứng */
-}
+      display: block;
+      margin: 8px auto;
+      width: 85%;
+      max-width: 240px;
+      background: #000;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid red; /* Changed to red */
+      font-size: 12px;
+      transition: 0.3s;
+      text-decoration: none;
+      box-shadow: 0 0 4px red; /* Changed to red */
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.button:hover {
-  background: #111; /* Giữ nền tối, không đổi màu */
-  color: hotpink;
-  box-shadow: 0 0 6px hotpink;
-}
-
-.button:focus {
-  outline: none;
-  background: #111; /* Không thay đổi màu khi focus */
-  color: hotpink;
-  box-shadow: 0 0 6px hotpink;
-}
-
-.button:active {
-  background: #111; /* Tránh nền bị sáng xanh khi nhấn giữ */
-  color: hotpink;
-  box-shadow: 0 0 8px hotpink;
-}
-
-.button:hover {
-  background: hotpink;
-  color: #000;
-}
-
-.button:hover {
-  background: hotpink;
-  color: #000;
-}
     .button:hover {
-      background: cyan;
+      background: #111;
+      color: red; /* Changed to red */
+      box-shadow: 0 0 6px red; /* Changed to red */
+    }
+
+    .button:focus {
+      outline: none;
+      background: #111;
+      color: red; /* Changed to red */
+      box-shadow: 0 0 6px red; /* Changed to red */
+    }
+
+    .button:active {
+      background: #111;
+      color: red; /* Changed to red */
+      box-shadow: 0 0 8px red; /* Changed to red */
+    }
+
+    .button:hover {
+      background: red; /* Changed to red */
       color: #000;
     }
 
-  .glow-button {
-  position: relative;
-  padding: 10px 20px;
-  font-size: 12px;
-  border: none;
-  border-radius: 14px;
-  background-color: black; /* Nền đen */
-  color: white; /* Chữ trắng */
-  cursor: pointer;
-  z-index: 1;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Phát sáng nhẹ */
-  overflow: hidden;
-}
+    .glow-button {
+      position: relative;
+      padding: 10px 20px;
+      font-size: 12px;
+      border: none;
+      border-radius: 14px;
+      background-color: black;
+      color: white;
+      cursor: pointer;
+      z-index: 1;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      overflow: hidden;
+    }
 
-.rainbow-wrapper {
-  position: relative;
-  display: block;
-  width: 85%;
-  max-width: 240px;
-  margin: 12px auto;
-  border-radius: 16px;
-  padding: 2px;
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
-  background-size: 600% 600%;
-  animation: moveRainbow 5s linear infinite;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-}
+    .rainbow-wrapper {
+      position: relative;
+      display: block;
+      width: 85%;
+      max-width: 240px;
+      margin: 12px auto;
+      border-radius: 16px;
+      padding: 2px;
+      background: linear-gradient(270deg, red, darkred, red); /* Simplified for red theme */
+      background-size: 600% 600%;
+      animation: moverainbow 5s linear infinite;
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.5); /* Changed to red */
+    }
 
-@keyframes moveRainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+    @keyframes moverainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
-.rainbow-button-text {
-  display: block;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 13px;
-  border-radius: 14px;
-  text-decoration: none;
-  font-weight: bold;
-}
-@keyframes rainbow-border {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-@keyframes rainbow-border {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+    .rainbow-button-text {
+      display: block;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 13px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @keyframes rainbow-border {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
     @keyframes glow {
-      0% { box-shadow: 0 0 5px #1e90ff; }
-      50% { box-shadow: 0 0 15px #1e90ff; }
-      100% { box-shadow: 0 0 5px #1e90ff; }
+      0% { box-shadow: 0 0 5px #ff0000; } /* Changed to red */
+      50% { box-shadow: 0 0 15px #ff0000; } /* Changed to red */
+      100% { box-shadow: 0 0 5px #ff0000; } /* Changed to red */
     }
 
     .qr-section img {
@@ -196,7 +184,6 @@
       font-size: 16px;
     }
 
-    /* Responsive mô tả, heading */
     .desc, .zalo-box {
       font-size: 13px;
     }
@@ -208,81 +195,60 @@
     }
     
     .triple-color-btn-wrapper {
-  position: relative;
-  display: block;
-  width: 85%;
-  max-width: 240px;
-  margin: 12px auto;
-  border-radius: 14px;
-  padding: 2px;
-  background: linear-gradient(270deg, hotpink, limegreen, cyan, hotpink);
-  background-size: 400% 400%;
-  animation: tripleColorMove 5s linear infinite;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-}
+      position: relative;
+      display: block;
+      width: 85%;
+      max-width: 240px;
+      margin: 12px auto;
+      border-radius: 14px;
+      padding: 2px;
+      background: linear-gradient(270deg, red, darkred, black, red); /* Adapted for red theme */
+      background-size: 400% 400%;
+      animation: triplecolormove 5s linear infinite;
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.5); /* Changed to red */
+    }
 
-@keyframes tripleColorMove {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+    @keyframes triplecolormove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
-.download-btn {
-  display: block;
-  margin: 8px auto;
-  width: 85%;
-  max-width: 240px;
-  background: #000;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  text-decoration: none;
-  border: 3px solid;
-  border-image: linear-gradient(to right, hotpink, limegreen, deepskyblue) 1;
-  box-shadow: 0 0 12px hotpink, 0 0 12px limegreen, 0 0 12px deepskyblue;
-}
+    .download-btn {
+      display: block;
+      margin: 8px auto;
+      width: 85%;
+      max-width: 240px;
+      background: #000;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      text-decoration: none;
+      border: 3px solid;
+      border-image: linear-gradient(to right, red, darkred, black) 1; /* Adapted for red theme */
+      box-shadow: 0 0 12px red, 0 0 12px darkred, 0 0 12px black; /* Adapted for red theme */
+    }
 
-
-
-#mascot-label {
-  position: fixed;
-  bottom: 0px;
-  right: 20px;
-  width: auto;
-  max-width: 160px;
-  padding: 6px 10px;
-  background-color: white !important;
-  color: black !important;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-  z-index: 998;
-  pointer-events: none;
-}
+    #mascot-label {
+      position: fixed;
+      bottom: 0px;
+      right: 20px;
+      width: auto;
+      max-width: 160px;
+      padding: 6px 10px;
+      background-color: white !important;
+      color: black !important;
+      font-size: 10px;
+      font-weight: bold;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+      z-index: 998;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
-<!-- Menu điều hướng -->
-<button class="menu-toggle" onclick="document.querySelector('.side-menu').classList.toggle('open')">
-  ☰
-</button>
-<div class="side-menu">
-  <h2>Danh Mục</h2>
-  <a href="index.html">🏠 Trang Chủ (TCN)</a>
-  <a href="banggia.html">💰 Bảng Giá</a>
-  <a href="khodv.html">📦 Kho Dịch Vụ</a>
-  <br><br><br>
-  <h2>Dịch Vụ Free</h2>
-  <a href="maqr.html">🔥 Tạo mã qr từ link</a>
-  <a href="muachu.html">👩‍💻 Mưa chữ + Lời nhắn</a>
-  <br><br><br><br>
-  <h2>Web Khác Của Tôi</h2>
-   <a href="https://trongnghia1759.github.io/devbase/">Dev Base - Kho Tài Nguyên Free</a>
-  <a href="https://c8-thptkrongno.github.io/">C8 - THPT Krông Nô</a>
-</div>
-
 <style>
 .menu-toggle {
   position: fixed;
@@ -292,7 +258,7 @@
   background: transparent;
   border: none;
   font-size: 26px;
-  color: #ff4dd2;
+  color: #ff0000; /* Changed to red */
   cursor: pointer;
 }
 .side-menu {
@@ -301,7 +267,7 @@
   left: -240px;
   width: 240px;
   height: 100%;
-  background: #1a001f;
+  background: #1a0000; /* Darker red/black */
   padding: 60px 20px;
   transition: left 0.3s ease;
   box-shadow: 4px 0 20px rgba(0,0,0,0.5);
@@ -309,7 +275,7 @@
 }
 .side-menu.open { left: 0; }
 .side-menu h2 {
-  color: #ff99dd;
+  color: #ff6666; /* Lighter red */
   margin-bottom: 20px;
   font-size: 16px;
   text-align: center;
@@ -319,21 +285,21 @@
   color: #fff;
   text-decoration: none;
   padding: 10px 0;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #440000; /* Darker red */
   transition: all 0.3s;
   font-size: 13px;
 }
-.side-menu a:hover { color: #ff4dd2; transform: translateX(4px); }
+.side-menu a:hover { color: #ff0000; transform: translateX(4px); } /* Changed to red */
 </style>
 
-<!-- Hiệu ứng hoa rơi -->
 <style>
   .flower {
     position: fixed;
     top: -50px;
     font-size: 20px;
     animation: fall linear infinite;
-    z-index: 9999;
+   
+    z-index: -1;
     pointer-events: none;
   }
   @keyframes fall {
@@ -350,10 +316,10 @@
   border-radius: 10px;
   color: white;
   cursor: pointer;
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
+  background: linear-gradient(270deg, red, darkred, red); /* Adapted for red theme */
   background-size: 1400% 1400%;
-  animation: rainbowMove 6s linear infinite;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5); /* ánh sáng tĩnh */
+  animation: rainbowmove 6s linear infinite;
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.5); /* Changed to red */
   transition: transform 0.2s;
 }
 
@@ -361,304 +327,54 @@
   transform: scale(1.05);
 }
 
-@keyframes rainbowMove {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-@keyframes rainbowMove {
+@keyframes rainbowmove {
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
 }
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 12px rgba(255,255,255,0.6), 0 0 24px rgba(255,255,255,0.4);
+    box-shadow: 0 0 12px rgba(255,0,0,0.6), 0 0 24px rgba(255,0,0,0.4); /* Changed to red */
   }
   50% {
-    box-shadow: 0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.8);
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8);
+    box-shadow: 0 0 20px rgba(255,0,0,1), 0 0 40px rgba(255,0,0,0.8); /* Changed to red */
   }
 }
 </style>
 <script>
-  function createFlower() {
+  function createflower() {
     const flower = document.createElement("div");
     flower.classList.add("flower");
     flower.style.left = Math.random() * 100 + "vw";
     flower.style.animationDuration = 3 + Math.random() * 5 + "s";
-    flower.innerText = "🌸";
+    flower.innerText = "🌚";
     document.body.appendChild(flower);
     setTimeout(() => flower.remove(), 8000);
   }
-  setInterval(createFlower, 300);
+  setInterval(createflower, 300);
 </script>
-
-<!-- Avatar -->
 <div class="avatar-wrapper">
-  <img src="https://i.postimg.cc/KzKck7tt/8ad3e721-a3ae-4d68-8e34-ab8feddb88f1.png" class="avatar-border" alt="Viền PNG">
-  <img src="logo.png" class="avatar" alt="Avatar">
+  <img src="avt.png" class="avatar-border" alt="viền png">
+  <img src="logo.png" class="avatar" alt="avatar">
 </div>
-
-<!-- Tên + tick -->
 <h1>
-  👻• Đàm Trọng Nghĩa
-  <img src="https://i.postimg.cc/zfdHxRYf/IMG-20250729-173606-preview-rev-1.png" alt="tick xanh" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 6px;">
+  👻• Đàm trọng nghĩa
+  <img src="tick.png" alt="tick xanh" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 6px;">
 </h1>
-
-<!-- Mô tả -->
 <div class="desc">
-  Cung Cấp Dịch Vụ Mạng Xã Hội Giá Rẻ<br>
-  • Thiết Kế Website Theo Yêu Cầu •<br>
-  Lên Premium App (Locket, NGL,...)
+  cung cấp dịch vụ mạng xã hội giá rẻ<br>
+  • thiết kế website theo yêu cầu •<br>
+  lên premium app (locket, ngl,...)
 </div>
-
-<div class="rainbow-wrapper">
-  <a href="https://www.facebook.com/61576009787673/posts/122125229564866992/?mibextid=rS40aB7S9Ucbxw6v" target="_blank" class="rainbow-button-text">🥇 Check Uy Tín 🥇</a>
+<button class="rainbow-button">liên hệ ngay</button>
+<br>
+<a class="button" href="https://www.facebook.com/61576009787673/posts/122125229564866992/?app=fbl" target="_blank">🚀 check uy tín 🚀</a><br>
+<a class="button" href="https://www.facebook.com/profile.php?id=61576009787673" target="_blank">facebook</a><br>
+<a class="button" href="https://vm.tiktok.com/zss6vqavm/" target="_blank">tiktok chính</a><br>
+<a class="button" href="https://www.instagram.com/bo1759_n?igsh=yzljytk1odg3zg==" target="_blank">instagram</a><br>
+<a class="button" href="https://locket.cam/bbo1759" target="_blank">locket</a>
 </div>
-<hr class="divider" />
-
-<!-- Zalo Box -->
-<button class="rainbow-button">Liên hệ ngay</button>
-
-<!-- Nút liên kết mạng xã hội -->
-<a class="button" href="https://www.facebook.com/61576009787673/posts/122125229564866992/?app=fbl" target="_blank">🚀 Check Uy Tín 🚀</a>
-<a class="button" href="https://www.facebook.com/profile.php?id=61576009787673" target="_blank">Facebook</a>
-<a class="button" href="https://vm.tiktok.com/ZSS6vqAvM/" target="_blank">TikTok Chính</a>
-<a class="button" href="https://vm.tiktok.com/ZSSrwQnGQ/" target="_blank">TikTok Đú Theo Dân IT</a>
-<a class="button" href="https://www.instagram.com/bo1759_n?igsh=YzljYTk1ODg3Zg==" target="_blank">Instagram</a>
-<a class="button" href="https://locket.cam/bbo1759" target="_blank">Locket</a>
-
-<hr class="divider" />
-
-<!-- QR + Website -->
-<div class="qr-section">
-  <h2>Website Của Tôi</h2>
-  
-
-
-
-
-
-<div class="rainbow-wrapper">
-  <a href="https://c8-thptkrongno.github.io/" target="_blank" class="rainbow-button-text">Kỷ Niệm Cùng C8 - THPT Krông Nô</a>
-</div>
-
-<hr class="divider" />
-
-<!-- QR ủng hộ -->
-<div class="qr-section">
-  <h2>Chuyên Mục Ăng Xin</h2>
-  <br>
-  <img src="https://i.postimg.cc/3RVGns6F/IMG-20250829-111218.jpg" alt="QR Ủng hộ">
-  <br>
-  <div class="desc">
-    MB Bank: Đàm Trọng Nghĩa<br>
-    STK: 0948877241
-  </div>
-  <br>
-  <div class="triple-color-btn-wrapper">
-  <a class="triple-color-btn" href="https://i.postimg.cc/C5fBjppM/IMG-20250729-135730.jpg" download="qr-ung-ho.png">Tải mã QR</a>
-</div>
-
-
-
 <body>
-  <!-- Bot và nhạc -->
-  <img src="https://i.postimg.cc/zvBtGJQB/cute-robot-waving-hand-cartoon-illustration-138676-2744-preview-rev-1.png" id="mascot-bot">
-<div id="mascot-label">Phát nhạc, click 👆</div>
-
-<audio id="mascot-audio" src="https://files.catbox.moe/dha6ws.mp3"></audio>
-
-<script>
-  const mascotBot = document.getElementById("mascot-bot");
-  const mascotAudio = document.getElementById("mascot-audio");
-
-  mascotBot.addEventListener("click", function () {
-    if (mascotAudio.paused) {
-      mascotAudio.play();
-    } else {
-      mascotAudio.pause();
-    }
-  });
-</script>
-
-<style>
-  #mascot-bot {
-    position: fixed;
-    bottom: 40px;
-    right: 20px;
-    width: 80px;
-    cursor: pointer;
-    z-index: 999;
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-
-  #mascot-label {
-    position: fixed;
-    bottom: 0px;
-    right: 15px;
-    width: 90px;
-    text-align: center;
-    font-size: 13px;
-    color: pink;
-    font-weight: bold;
-    text-shadow: 0 0 4px hotpink;
-    z-index: 998;
-    pointer-events: none;
-  }
-
 </style>
-
-
-
-
-
-
-<div class="customer-comments" id="customer-comments">
-  <div class="comments-header">
-    <h3>BÌNH LUẬN</h3>
-    <p class="subtitle">Đây là những phản hồi của khách góp ý được chúng tôi xin ý phép dán vào Website</p>
-    <div class="line"></div>
-  </div>
-</div>
-
-<style>
-  .customer-comments {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 16px;
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a; /* nền tối */
-    border-radius: 10px;
-  }
-
-  /* Tiêu đề căn giữa */
-  .comments-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  .comments-header h3 {
-    font-size: 20px;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-
-  /* Dòng chữ phụ */
-  .comments-header .subtitle {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7); /* trắng nhưng mờ hơn */
-    margin-bottom: 8px;
-  }
-
-  /* Dòng kẻ */
-  .comments-header .line {
-    width: 100%;
-    height: 2px;
-    background-color: #ccc;
-  }
-
-  /* Bình luận */
-  .comment-item {
-    border-bottom: 1px solid #333;
-    padding: 12px 0;
-    text-align: left;
-  }
-
-  /* Tên FB: xanh phát sáng */
-  .comment-meta {
-    font-size: 13px;
-    color: #00bfff;
-    text-shadow: 0 0 5px #00bfff;
-    margin-bottom: 6px;
-  }
-
-  /* Nội dung comment: trắng rõ */
-  .comment-text {
-    font-size: 15px;
-    line-height: 1.4;
-    color: #fff;
-  }
-</style>
-
-<script>
-  // Dữ liệu bình luận khách hàng thật
-  const customerComments = [
-    { name: "FB: Huỳnh Văn Thái", text: "Dv uy tín" },
-    { name: "FB: Nguyễn An", text: "Dịch vụ rất tốt, hỗ trợ nhanh" },
-    { name: "FB: Nguyễn Ngọc Bảo Nam", text: "rồi nha uy tín thật còn đồ ăn thì tôi chưa thử" },
-    { name: "FB: Chìn Chá", text: "Legitt nhó" },
-    { name: "FB: Khánh Vân", text: "Giỏi quá anh ơi" },
-    { name: "FB: Quốc Huy", text: "Uy tín lắm" },
-    { name: "FB: Trần Nguyễn Nam Vinh", text: "Uy tín lắm nha" },
-    { name: "FB: Thanh Tâm", text: "Sẽ ủng hộ dài dài" },
-    { name: "FB: Bảo Nam", text: "Đã rẻ lại còn uy tín" },
-    { name: "FB: Bích Hằng", text: "Dv oke nha" },
-    { name: "FB: Mai Tiến", text: "rẻ quá mà lên tương tác nhanh" },
-    { name: "FB: Thùy Linh", text: "mình thấy uki nho" },
-{ name: "FB: Bảo Ngọc", text: "dịch vụ oki lắm anh ạ" },
-{ name: "FB: Trần Thanh", text: "giá rẻ thật sự" },
-{ name: "FB: Quốc Cường", text: "10 điểm nha e" },
-{ name: "FB: Kim Liên", text: "m giỏi ghê á ủng hộ dài lâu" },
-{ name: "FB: Hải Đăng", text: "Đủ wow rồi" },
-{ name: "FB: Bùi Thái Hà", text: "Cũng đc" },
-{ name: "FB: Ngọc Trâm", text: "cái fl tik bên ông hơi chậm á cần nhanh hơn nha" },
-{ name: "FB: Kim Ngân", text: "chất lượng lắm ạ" },
-{ name: "FB: Quốc Anh", text: "cách rep tn khách dth lắm" },
-{ name: "FB: HTrang Nie", text: "oki lắm ạ" },
-{ name: "FB: Mai Linh", text: "thêm cái siêu nhiệt tình" },
-{ name: "FB: Ngọc Moon", text: "lên theo dõi hơi chậm nha bạn" },
-{ name: "FB: Ánh Ánh", text: "Cx ok" },
-{ name: "FB: Hà Thế Quân", text: "rẻ hơn nhiều nơi khác" },
-{ name: "FB: Nguyễn Quanh", text: "ok lắm bn" },
-{ name: "FB: Châu Mai", text: "hơi rườm rà nhưng đáng" },
-{ name: "FB: Lee Anh Tuấn", text: "khỏi phải bàn" },
-{ name: "FB: Hồng Ngọc", text: "cách rep đã ăn trọn điểm chx cần ns đến dv" },
-{ name: "FB: Mai Linh", text: "tui thấy dịch vụ bên bạn uy tín, giá hợp lí" },
-    { name: "FB: Nguyễn Mai", text: "Ê lên nhanh vậy ông" }
-  ];
-
-  function renderCustomerComments(containerId, comments) {
-    const container = document.getElementById(containerId);
-
-    comments.forEach(c => {
-      const item = document.createElement('div');
-      item.className = 'comment-item';
-
-      const meta = document.createElement('div');
-      meta.className = 'comment-meta';
-      meta.textContent = c.name;
-
-      const text = document.createElement('div');
-      text.className = 'comment-text';
-      text.textContent = c.text;
-
-      item.appendChild(meta);
-      item.appendChild(text);
-      container.appendChild(item);
-    });
-  }
-
-  renderCustomerComments("customer-comments", customerComments);
-</script>
-
-
-
 </body>
 </html>

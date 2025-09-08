@@ -1,16 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>trang cá nhân</title>
-  <link href="https://trongnghia1759.github.io/" rel="stylesheet">
+  <title>Trang Cá Nhân</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'fredoka', sans-serif;
+      font-family: 'Fredoka', sans-serif;
     }
 
     body {
@@ -52,7 +52,7 @@
     }
 
     .desc {
-      color: #ff0000; /* Changed to red */
+      color: #00f7ff;
       margin-top: 10px;
       line-height: 1.6;
       font-size: 13px;
@@ -60,17 +60,17 @@
 
     .divider {
       border: none;
-      border-top: 1px solid rgba(255, 0, 0, 0.5); /* Changed to red */
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       width: 80%;
       margin: 20px auto;
-      box-shadow: 0 0 4px rgba(255, 0, 0, 0.5); /* Changed to red */
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
     }
 
     .zalo-box {
       margin: 15px 0;
       font-weight: bold;
-      color: #fff; /* Changed to white for contrast */
-      background: #ff0000; /* Changed to red */
+      color: #000;
+      background: #00f7ff;
       display: inline-block;
       padding: 6px 12px;
       border-radius: 10px;
@@ -78,101 +78,113 @@
     }
 
     .button {
-      display: block;
-      margin: 8px auto;
-      width: 85%;
-      max-width: 240px;
-      background: #000;
-      color: white;
-      padding: 10px;
-      border-radius: 10px;
-      border: 2px solid red; /* Changed to red */
-      font-size: 12px;
-      transition: 0.3s;
-      text-decoration: none;
-      box-shadow: 0 0 4px red; /* Changed to red */
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+  display: block;
+  margin: 8px auto;
+  width: 85%;
+  max-width: 240px;
+  background: #000;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid hotpink;
+  font-size: 12px;
+  transition: 0.3s;
+  text-decoration: none;
+  box-shadow: 0 0 4px hotpink;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Chặn viền xanh khi tap trên thiết bị cảm ứng */
+}
 
+.button:hover {
+  background: #111; /* Giữ nền tối, không đổi màu */
+  color: hotpink;
+  box-shadow: 0 0 6px hotpink;
+}
+
+.button:focus {
+  outline: none;
+  background: #111; /* Không thay đổi màu khi focus */
+  color: hotpink;
+  box-shadow: 0 0 6px hotpink;
+}
+
+.button:active {
+  background: #111; /* Tránh nền bị sáng xanh khi nhấn giữ */
+  color: hotpink;
+  box-shadow: 0 0 8px hotpink;
+}
+
+.button:hover {
+  background: hotpink;
+  color: #000;
+}
+
+.button:hover {
+  background: hotpink;
+  color: #000;
+}
     .button:hover {
-      background: #111;
-      color: red; /* Changed to red */
-      box-shadow: 0 0 6px red; /* Changed to red */
-    }
-
-    .button:focus {
-      outline: none;
-      background: #111;
-      color: red; /* Changed to red */
-      box-shadow: 0 0 6px red; /* Changed to red */
-    }
-
-    .button:active {
-      background: #111;
-      color: red; /* Changed to red */
-      box-shadow: 0 0 8px red; /* Changed to red */
-    }
-
-    .button:hover {
-      background: red; /* Changed to red */
+      background: cyan;
       color: #000;
     }
 
-    .glow-button {
-      position: relative;
-      padding: 10px 20px;
-      font-size: 12px;
-      border: none;
-      border-radius: 14px;
-      background-color: black;
-      color: white;
-      cursor: pointer;
-      z-index: 1;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-      overflow: hidden;
-    }
+  .glow-button {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 12px;
+  border: none;
+  border-radius: 14px;
+  background-color: black; /* Nền đen */
+  color: white; /* Chữ trắng */
+  cursor: pointer;
+  z-index: 1;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Phát sáng nhẹ */
+  overflow: hidden;
+}
 
-    .rainbow-wrapper {
-      position: relative;
-      display: block;
-      width: 85%;
-      max-width: 240px;
-      margin: 12px auto;
-      border-radius: 16px;
-      padding: 2px;
-      background: linear-gradient(270deg, red, darkred, red); /* Simplified for red theme */
-      background-size: 600% 600%;
-      animation: moverainbow 5s linear infinite;
-      box-shadow: 0 0 12px rgba(255, 0, 0, 0.5); /* Changed to red */
-    }
+.rainbow-wrapper {
+  position: relative;
+  display: block;
+  width: 85%;
+  max-width: 240px;
+  margin: 12px auto;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
+  background-size: 600% 600%;
+  animation: moveRainbow 5s linear infinite;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
 
-    @keyframes moverainbow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
+@keyframes moveRainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
 
-    .rainbow-button-text {
-      display: block;
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      padding: 10px 0;
-      font-size: 13px;
-      border-radius: 14px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    @keyframes rainbow-border {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
+.rainbow-button-text {
+  display: block;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 13px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: bold;
+}
+@keyframes rainbow-border {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+@keyframes rainbow-border {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
 
     @keyframes glow {
-      0% { box-shadow: 0 0 5px #ff0000; } /* Changed to red */
-      50% { box-shadow: 0 0 15px #ff0000; } /* Changed to red */
-      100% { box-shadow: 0 0 5px #ff0000; } /* Changed to red */
+      0% { box-shadow: 0 0 5px #1e90ff; }
+      50% { box-shadow: 0 0 15px #1e90ff; }
+      100% { box-shadow: 0 0 5px #1e90ff; }
     }
 
     .qr-section img {
@@ -184,6 +196,7 @@
       font-size: 16px;
     }
 
+    /* Responsive mô tả, heading */
     .desc, .zalo-box {
       font-size: 13px;
     }
@@ -195,60 +208,73 @@
     }
     
     .triple-color-btn-wrapper {
-      position: relative;
-      display: block;
-      width: 85%;
-      max-width: 240px;
-      margin: 12px auto;
-      border-radius: 14px;
-      padding: 2px;
-      background: linear-gradient(270deg, red, darkred, black, red); /* Adapted for red theme */
-      background-size: 400% 400%;
-      animation: triplecolormove 5s linear infinite;
-      box-shadow: 0 0 12px rgba(255, 0, 0, 0.5); /* Changed to red */
-    }
+  position: relative;
+  display: block;
+  width: 85%;
+  max-width: 240px;
+  margin: 12px auto;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(270deg, hotpink, limegreen, cyan, hotpink);
+  background-size: 400% 400%;
+  animation: tripleColorMove 5s linear infinite;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
 
-    @keyframes triplecolormove {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
+@keyframes tripleColorMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
 
-    .download-btn {
-      display: block;
-      margin: 8px auto;
-      width: 85%;
-      max-width: 240px;
-      background: #000;
-      color: white;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      text-decoration: none;
-      border: 3px solid;
-      border-image: linear-gradient(to right, red, darkred, black) 1; /* Adapted for red theme */
-      box-shadow: 0 0 12px red, 0 0 12px darkred, 0 0 12px black; /* Adapted for red theme */
-    }
+.download-btn {
+  display: block;
+  margin: 8px auto;
+  width: 85%;
+  max-width: 240px;
+  background: #000;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-decoration: none;
+  border: 3px solid;
+  border-image: linear-gradient(to right, hotpink, limegreen, deepskyblue) 1;
+  box-shadow: 0 0 12px hotpink, 0 0 12px limegreen, 0 0 12px deepskyblue;
+}
 
-    #mascot-label {
-      position: fixed;
-      bottom: 0px;
-      right: 20px;
-      width: auto;
-      max-width: 160px;
-      padding: 6px 10px;
-      background-color: white !important;
-      color: black !important;
-      font-size: 10px;
-      font-weight: bold;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-      z-index: 998;
-      pointer-events: none;
-    }
+
+
+#mascot-label {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+  width: auto;
+  max-width: 160px;
+  padding: 6px 10px;
+  background-color: white !important;
+  color: black !important;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  z-index: 998;
+  pointer-events: none;
+}
   </style>
 </head>
 <body>
+<!-- Menu điều hướng -->
+<button class="menu-toggle" onclick="document.querySelector('.side-menu').classList.toggle('open')">
+  ☰
+</button>
+<div class="side-menu">
+  <h2>Danh Mục</h2>
+  <a href="index.html">🏠 Trang Chủ (TCN)</a>
+  <a href="khodv.html">💰 Kho Dịch Vụ</a>
+
+</div>
+
 <style>
 .menu-toggle {
   position: fixed;
@@ -258,7 +284,7 @@
   background: transparent;
   border: none;
   font-size: 26px;
-  color: #ff0000; /* Changed to red */
+  color: #ff4dd2;
   cursor: pointer;
 }
 .side-menu {
@@ -267,7 +293,7 @@
   left: -240px;
   width: 240px;
   height: 100%;
-  background: #1a0000; /* Darker red/black */
+  background: #1a001f;
   padding: 60px 20px;
   transition: left 0.3s ease;
   box-shadow: 4px 0 20px rgba(0,0,0,0.5);
@@ -275,7 +301,7 @@
 }
 .side-menu.open { left: 0; }
 .side-menu h2 {
-  color: #ff6666; /* Lighter red */
+  color: #ff99dd;
   margin-bottom: 20px;
   font-size: 16px;
   text-align: center;
@@ -285,13 +311,14 @@
   color: #fff;
   text-decoration: none;
   padding: 10px 0;
-  border-bottom: 1px solid #440000; /* Darker red */
+  border-bottom: 1px solid #444;
   transition: all 0.3s;
   font-size: 13px;
 }
-.side-menu a:hover { color: #ff0000; transform: translateX(4px); } /* Changed to red */
+.side-menu a:hover { color: #ff4dd2; transform: translateX(4px); }
 </style>
 
+<!-- Hiệu ứng hoa rơi -->
 <style>
   .flower {
     position: fixed;
@@ -299,7 +326,9 @@
     font-size: 20px;
     animation: fall linear infinite;
    
-    z-index: -1;
+  z-index: -1; /* Đặt giá trị âm để nó nằm dưới mọi thứ */
+
+
     pointer-events: none;
   }
   @keyframes fall {
@@ -316,10 +345,10 @@
   border-radius: 10px;
   color: white;
   cursor: pointer;
-  background: linear-gradient(270deg, red, darkred, red); /* Adapted for red theme */
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
   background-size: 1400% 1400%;
-  animation: rainbowmove 6s linear infinite;
-  box-shadow: 0 0 18px rgba(255, 0, 0, 0.5); /* Changed to red */
+  animation: rainbowMove 6s linear infinite;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5); /* ánh sáng tĩnh */
   transition: transform 0.2s;
 }
 
@@ -327,54 +356,143 @@
   transform: scale(1.05);
 }
 
-@keyframes rainbowmove {
+@keyframes rainbowMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes rainbowMove {
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
 }
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 12px rgba(255,0,0,0.6), 0 0 24px rgba(255,0,0,0.4); /* Changed to red */
+    box-shadow: 0 0 12px rgba(255,255,255,0.6), 0 0 24px rgba(255,255,255,0.4);
   }
   50% {
-    box-shadow: 0 0 20px rgba(255,0,0,1), 0 0 40px rgba(255,0,0,0.8); /* Changed to red */
+    box-shadow: 0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.8);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8);
   }
 }
 </style>
 <script>
-  function createflower() {
+  function createFlower() {
     const flower = document.createElement("div");
     flower.classList.add("flower");
     flower.style.left = Math.random() * 100 + "vw";
     flower.style.animationDuration = 3 + Math.random() * 5 + "s";
-    flower.innerText = "🌚";
+    flower.innerText = "";
     document.body.appendChild(flower);
     setTimeout(() => flower.remove(), 8000);
   }
-  setInterval(createflower, 300);
+  setInterval(createFlower, 300);
 </script>
+
+<!-- Avatar -->
 <div class="avatar-wrapper">
-  <img src="avt.png" class="avatar-border" alt="viền png">
-  <img src="logo.png" class="avatar" alt="avatar">
+  <img src="bebi.png" class="avatar-border" alt="Viền PNG">
+  <img src="logo2.png" class="avatar" alt="Avatar">
 </div>
+
+<!-- Tên + tick -->
 <h1>
-  👻• Đàm trọng nghĩa
-  <img src="tick.png" alt="tick xanh" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 6px;">
+  🌸• Bé Bi
+  <img src="https://i.postimg.cc/zfdHxRYf/IMG-20250729-173606-preview-rev-1.png" alt="tick xanh" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 6px;">
 </h1>
+
+<!-- Mô tả -->
 <div class="desc">
-  cung cấp dịch vụ mạng xã hội giá rẻ<br>
-  • thiết kế website theo yêu cầu •<br>
-  lên premium app (locket, ngl,...)
+  Dịch Vụ Mạng Xã Hội
+  <br>
+  Khu Vực: Krông Nô - Lâm Đồng
 </div>
-<button class="rainbow-button">liên hệ ngay</button>
+
+<hr class="divider" />
+<!-- Zalo Box -->
+<button class="rainbow-button">Liên hệ ngay</button>
 <br>
-<a class="button" href="https://www.facebook.com/61576009787673/posts/122125229564866992/?app=fbl" target="_blank">🚀 check uy tín 🚀</a><br>
-<a class="button" href="https://www.facebook.com/profile.php?id=61576009787673" target="_blank">facebook</a><br>
-<a class="button" href="https://vm.tiktok.com/zss6vqavm/" target="_blank">tiktok chính</a><br>
-<a class="button" href="https://www.instagram.com/bo1759_n?igsh=yzljytk1odg3zg==" target="_blank">instagram</a><br>
-<a class="button" href="https://locket.cam/bbo1759" target="_blank">locket</a>
-</div>
+
+
+
+
+
+
+<div class="rainbow-wrapper">
+  <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Flocket.cam%2Fntbinh_19%3Ffbclid%3DIwZXh0bgNhZW0CMTEAAR7KjOcfbVR_ujknyfF0JWJKbFMFwCbaK6FBmizB01NH2R2iD_xTNt6mQAVkhQ_aem_cM6m9xUKbfE1iOhHKDP5VA&h=AT0QNbACOSGj-GSYCo-TDGVebwPxCfd5-dyTkIi7sMLfWQwsIbyFC99R_1clOnlg6At7QrH1ZCD4AJZ8utiUzDU1tKQQjy9uLkO_07FNnfrAiHUQRCOdX_aP7kMev2sT2zQizd077Uc" target="_blank" class="rainbow-button-text">Zalo</a></div>
+  <div class="rainbow-wrapper">
+  <a href="https://www.facebook.com/nguyen.thanh.binh.236261"
+  target="_blank"
+  class="rainbow-button-text">Facebook</a>
+  </div>
+  
+
+
+ <div class="rainbow-wrapper">
+  <a href="https://www.facebook.com/nguyen.thanh.binh.236261"
+  target="_blank"
+  class="rainbow-button-text">Tik Tok</a>
+  </div>
+  
+<hr class="divider" />
+
 <body>
+  <!-- Bot và nhạc -->
+  <img src="https://i.postimg.cc/zvBtGJQB/cute-robot-waving-hand-cartoon-illustration-138676-2744-preview-rev-1.png" id="mascot-bot">
+<div id="mascot-label">Phát nhạc, click 👆</div>
+
+<audio id="mascot-audio" src="https://files.catbox.moe/dha6ws.mp3"></audio>
+
+<script>
+  const mascotBot = document.getElementById("mascot-bot");
+  const mascotAudio = document.getElementById("mascot-audio");
+
+  mascotBot.addEventListener("click", function () {
+    if (mascotAudio.paused) {
+      mascotAudio.play();
+    } else {
+      mascotAudio.pause();
+    }
+  });
+</script>
+
+<style>
+  #mascot-bot {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    width: 80px;
+    cursor: pointer;
+    z-index: 999;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  #mascot-label {
+    position: fixed;
+    bottom: 0px;
+    right: 15px;
+    width: 90px;
+    text-align: center;
+    font-size: 13px;
+    color: pink;
+    font-weight: bold;
+    text-shadow: 0 0 4px hotpink;
+    z-index: 998;
+    pointer-events: none;
+  }
 </style>
 </body>
 </html>

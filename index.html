@@ -1,498 +1,202 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trang Cá Nhân</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Fredoka', sans-serif;
-    }
-
-    body {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 13px;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      display: inline-block;
-      margin-top: 30px;
-      width: 150px;
-    }
-
-    .avatar-border {
-      width: 120px;
-      height: 120px;
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 0;
-    }
-
-    .avatar {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      font-size: 18px;
-      margin-top: 20px;
-      color: #fff;
-    }
-
-    .desc {
-      color: #00f7ff;
-      margin-top: 10px;
-      line-height: 1.6;
-      font-size: 13px;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      width: 80%;
-      margin: 20px auto;
-      box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
-    }
-
-    .zalo-box {
-      margin: 15px 0;
-      font-weight: bold;
-      color: #000;
-      background: #00f7ff;
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-    }
-
-    .button {
-  display: block;
-  margin: 8px auto;
-  width: 85%;
-  max-width: 240px;
-  background: #000;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  border: 2px solid hotpink;
-  font-size: 12px;
-  transition: 0.3s;
-  text-decoration: none;
-  box-shadow: 0 0 4px hotpink;
-  outline: none;
-  -webkit-tap-highlight-color: transparent; /* Chặn viền xanh khi tap trên thiết bị cảm ứng */
-}
-
-.button:hover {
-  background: #111; /* Giữ nền tối, không đổi màu */
-  color: hotpink;
-  box-shadow: 0 0 6px hotpink;
-}
-
-.button:focus {
-  outline: none;
-  background: #111; /* Không thay đổi màu khi focus */
-  color: hotpink;
-  box-shadow: 0 0 6px hotpink;
-}
-
-.button:active {
-  background: #111; /* Tránh nền bị sáng xanh khi nhấn giữ */
-  color: hotpink;
-  box-shadow: 0 0 8px hotpink;
-}
-
-.button:hover {
-  background: hotpink;
-  color: #000;
-}
-
-.button:hover {
-  background: hotpink;
-  color: #000;
-}
-    .button:hover {
-      background: cyan;
-      color: #000;
-    }
-
-  .glow-button {
-  position: relative;
-  padding: 10px 20px;
-  font-size: 12px;
-  border: none;
-  border-radius: 14px;
-  background-color: black; /* Nền đen */
-  color: white; /* Chữ trắng */
-  cursor: pointer;
-  z-index: 1;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Phát sáng nhẹ */
-  overflow: hidden;
-}
-
-.rainbow-wrapper {
-  position: relative;
-  display: block;
-  width: 85%;
-  max-width: 240px;
-  margin: 12px auto;
-  border-radius: 16px;
-  padding: 2px;
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
-  background-size: 600% 600%;
-  animation: moveRainbow 5s linear infinite;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-}
-
-@keyframes moveRainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-.rainbow-button-text {
-  display: block;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 13px;
-  border-radius: 14px;
-  text-decoration: none;
-  font-weight: bold;
-}
-@keyframes rainbow-border {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-@keyframes rainbow-border {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-    @keyframes glow {
-      0% { box-shadow: 0 0 5px #1e90ff; }
-      50% { box-shadow: 0 0 15px #1e90ff; }
-      100% { box-shadow: 0 0 5px #1e90ff; }
-    }
-
-    .qr-section img {
-      width: 100%;
-      max-width: 160px;
-    }
-
-    .qr-section h2 {
-      font-size: 16px;
-    }
-
-    /* Responsive mô tả, heading */
-    .desc, .zalo-box {
-      font-size: 13px;
-    }
-
-    @media (min-width: 600px) {
-      h1 {
-        font-size: 20px;
-      }
-    }
-    
-    .triple-color-btn-wrapper {
-  position: relative;
-  display: block;
-  width: 85%;
-  max-width: 240px;
-  margin: 12px auto;
-  border-radius: 14px;
-  padding: 2px;
-  background: linear-gradient(270deg, hotpink, limegreen, cyan, hotpink);
-  background-size: 400% 400%;
-  animation: tripleColorMove 5s linear infinite;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-}
-
-@keyframes tripleColorMove {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-.download-btn {
-  display: block;
-  margin: 8px auto;
-  width: 85%;
-  max-width: 240px;
-  background: #000;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  text-decoration: none;
-  border: 3px solid;
-  border-image: linear-gradient(to right, hotpink, limegreen, deepskyblue) 1;
-  box-shadow: 0 0 12px hotpink, 0 0 12px limegreen, 0 0 12px deepskyblue;
-}
-
-
-
-#mascot-label {
-  position: fixed;
-  bottom: 0px;
-  right: 20px;
-  width: auto;
-  max-width: 160px;
-  padding: 6px 10px;
-  background-color: white !important;
-  color: black !important;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-  z-index: 998;
-  pointer-events: none;
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Ghép Mã QR vào Ảnh</title>
+    <style>
+        /* CSS Cơ Bản */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .image-selection img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            border-radius: 4px;
+            transition: border-color 0.2s;
+        }
+        .image-selection img.selected {
+            border-color: #007bff;
+        }
+        #result-canvas {
+            display: block;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            max-width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #1e7e34;
+        }
+    </style>
 </head>
 <body>
-<!-- Menu điều hướng -->
-<button class="menu-toggle" onclick="document.querySelector('.side-menu').classList.toggle('open')">
-  ☰
-</button>
-<div class="side-menu">
-  <h2>Danh Mục</h2>
-  <a href="index.html">🏠 Trang Chủ (TCN)</a>
-  <a href="khodv.html">💰 Kho Dịch Vụ</a>
+    <div class="container">
+        <h1>Công Cụ Ghép Mã QR vào Ảnh</h1>
 
-</div>
+        <div class="section">
+            <h2>Bước 1: Chọn Ảnh Nền</h2>
+            <div class="image-selection">
+                <img id="img1" src="https://via.placeholder.com/300x200?text=Ảnh+Nền+1" alt="Ảnh Nền 1" data-url="https://via.placeholder.com/600x400?text=Ảnh+Nền+1" onclick="selectBackground(this)">
+                <img id="img2" src="https://via.placeholder.com/300x200/4e73df/ffffff?text=Ảnh+Nền+2" alt="Ảnh Nền 2" data-url="https://via.placeholder.com/600x400/4e73df/ffffff?text=Ảnh+Nền+2" onclick="selectBackground(this)">
+            </div>
+            <p>Ảnh nền đã chọn: <span id="selected-bg-name">Chưa chọn</span></p>
+        </div>
 
-<style>
-.menu-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 10001;
-  background: transparent;
-  border: none;
-  font-size: 26px;
-  color: #ff4dd2;
-  cursor: pointer;
-}
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -240px;
-  width: 240px;
-  height: 100%;
-  background: #1a001f;
-  padding: 60px 20px;
-  transition: left 0.3s ease;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.5);
-  z-index: 10000;
-}
-.side-menu.open { left: 0; }
-.side-menu h2 {
-  color: #ff99dd;
-  margin-bottom: 20px;
-  font-size: 16px;
-  text-align: center;
-}
-.side-menu a {
-  display: block;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 0;
-  border-bottom: 1px solid #444;
-  transition: all 0.3s;
-  font-size: 13px;
-}
-.side-menu a:hover { color: #ff4dd2; transform: translateX(4px); }
-</style>
+        <div class="section">
+            <h2>Bước 2: Tải Lên Mã QR</h2>
+            <input type="file" id="qr-upload" accept="image/*">
+            <p>Mã QR đã tải: <span id="uploaded-qr-name">Chưa tải</span></p>
+        </div>
 
-<!-- Hiệu ứng hoa rơi -->
-<style>
-  .flower {
-    position: fixed;
-    top: -50px;
-    font-size: 20px;
-    animation: fall linear infinite;
-   
-  z-index: -1; /* Đặt giá trị âm để nó nằm dưới mọi thứ */
+        <div class="section">
+            <h2>Bước 3: Tạo Ảnh Kết Quả</h2>
+            <button onclick="generateImage()">Tạo Ảnh Ghép QR</button>
+            <p id="error-message" style="color: red; margin-top: 10px;"></p>
+        </div>
 
+        <div class="section">
+            <h2>Ảnh Kết Quả</h2>
+            <canvas id="result-canvas" width="600" height="400"></canvas>
+            <button id="download-button" style="margin-top: 10px; display: none;" onclick="downloadImage()">Tải Xuống</button>
+        </div>
+    </div>
 
-    pointer-events: none;
-  }
-  @keyframes fall {
-    to {
-      transform: translateY(100vh) rotate(360deg);
-      opacity: 0;
-    }
-  }
-  .rainbow-button {
-  padding: 6px 14px;
-  font-size: 14px;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
-  background-size: 1400% 1400%;
-  animation: rainbowMove 6s linear infinite;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5); /* ánh sáng tĩnh */
-  transition: transform 0.2s;
-}
+    <script>
+        // JavaScript Xử Lý Tương Tác
+        let selectedBgUrl = null;
+        let qrFile = null;
 
-.rainbow-button:hover {
-  transform: scale(1.05);
-}
+        // Xử lý chọn ảnh nền
+        function selectBackground(imgElement) {
+            // Xóa class 'selected' khỏi tất cả ảnh
+            document.querySelectorAll('.image-selection img').forEach(img => {
+                img.classList.remove('selected');
+            });
 
-@keyframes rainbowMove {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+            // Thêm class 'selected' vào ảnh vừa chọn
+            imgElement.classList.add('selected');
+            selectedBgUrl = imgElement.getAttribute('data-url');
+            document.getElementById('selected-bg-name').textContent = imgElement.alt;
+        }
 
-@keyframes rainbowMove {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+        // Xử lý tải file QR
+        document.getElementById('qr-upload').addEventListener('change', (event) => {
+            qrFile = event.target.files[0];
+            if (qrFile) {
+                document.getElementById('uploaded-qr-name').textContent = qrFile.name;
+            } else {
+                document.getElementById('uploaded-qr-name').textContent = 'Chưa tải';
+            }
+        });
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 12px rgba(255,255,255,0.6), 0 0 24px rgba(255,255,255,0.4);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.8);
-  }
-}
+        // Xử lý nút "Tạo Ảnh Ghép QR"
+        function generateImage() {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = '';
+            document.getElementById('download-button').style.display = 'none';
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8);
-  }
-}
-</style>
-<script>
-  function createFlower() {
-    const flower = document.createElement("div");
-    flower.classList.add("flower");
-    flower.style.left = Math.random() * 100 + "vw";
-    flower.style.animationDuration = 3 + Math.random() * 5 + "s";
-    flower.innerText = "";
-    document.body.appendChild(flower);
-    setTimeout(() => flower.remove(), 8000);
-  }
-  setInterval(createFlower, 300);
-</script>
+            if (!selectedBgUrl || !qrFile) {
+                errorMessage.textContent = 'Vui lòng chọn Ảnh Nền và tải lên Mã QR.';
+                return;
+            }
 
-<!-- Avatar -->
-<div class="avatar-wrapper">
-  <img src="bebi.png" class="avatar-border" alt="Viền PNG">
-  <img src="logo2.png" class="avatar" alt="Avatar">
-</div>
+            const canvas = document.getElementById('result-canvas');
+            const ctx = canvas.getContext('2d');
 
-<!-- Tên + tick -->
-<h1>
-  🌸• Bé Bi
-  <img src="https://i.postimg.cc/zfdHxRYf/IMG-20250729-173606-preview-rev-1.png" alt="tick xanh" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 6px;">
-</h1>
+            const bgImage = new Image();
+            const qrImage = new Image();
 
-<!-- Mô tả -->
-<div class="desc">
-  Dịch Vụ Mạng Xã Hội
-  <br>
-  Khu Vực: Krông Nô - Lâm Đồng
-</div>
+            // 1. Tải Ảnh Nền
+            bgImage.onload = () => {
+                // Đảm bảo Canvas có kích thước bằng ảnh nền
+                canvas.width = bgImage.width;
+                canvas.height = bgImage.height;
+                ctx.drawImage(bgImage, 0, 0);
 
-<hr class="divider" />
-<!-- Zalo Box -->
-<button class="rainbow-button">Liên hệ ngay</button>
-<br>
+                // 2. Tải Mã QR
+                qrImage.onload = () => {
+                    // *** LOGIC GHÉP ẢNH CANVAS ***
+                    
+                    // a. Xác định kích thước và vị trí QR (ví dụ: 25% chiều rộng ảnh nền)
+                    const qrSize = Math.min(bgImage.width, bgImage.height) * 0.25; 
+                    
+                    // b. Tính toán vị trí chính giữa
+                    const x = (bgImage.width - qrSize) / 2;
+                    const y = (bgImage.height - qrSize) / 2;
 
+                    // c. Ghép mã QR vào ảnh nền
+                    ctx.drawImage(qrImage, x, y, qrSize, qrSize);
 
+                    document.getElementById('download-button').style.display = 'block';
+                    errorMessage.textContent = 'Đã tạo ảnh thành công!';
+                };
+                
+                qrImage.onerror = () => {
+                    errorMessage.textContent = 'Lỗi khi tải file Mã QR.';
+                };
 
+                // Đọc file QR đã tải lên
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    qrImage.src = e.target.result;
+                };
+                reader.readAsDataURL(qrFile);
+            };
 
+            bgImage.onerror = () => {
+                errorMessage.textContent = 'Lỗi khi tải Ảnh Nền.';
+            };
+            bgImage.src = selectedBgUrl; // Bắt đầu tải ảnh nền
+        }
 
-
-<div class="rainbow-wrapper">
-  <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Flocket.cam%2Fntbinh_19%3Ffbclid%3DIwZXh0bgNhZW0CMTEAAR7KjOcfbVR_ujknyfF0JWJKbFMFwCbaK6FBmizB01NH2R2iD_xTNt6mQAVkhQ_aem_cM6m9xUKbfE1iOhHKDP5VA&h=AT0QNbACOSGj-GSYCo-TDGVebwPxCfd5-dyTkIi7sMLfWQwsIbyFC99R_1clOnlg6At7QrH1ZCD4AJZ8utiUzDU1tKQQjy9uLkO_07FNnfrAiHUQRCOdX_aP7kMev2sT2zQizd077Uc" target="_blank" class="rainbow-button-text">Zalo</a></div>
-  <div class="rainbow-wrapper">
-  <a href="https://www.facebook.com/nguyen.thanh.binh.236261"
-  target="_blank"
-  class="rainbow-button-text">Facebook</a>
-  </div>
-  
-
-
- <div class="rainbow-wrapper">
-  <a href="https://www.facebook.com/nguyen.thanh.binh.236261"
-  target="_blank"
-  class="rainbow-button-text">Tik Tok</a>
-  </div>
-  
-<hr class="divider" />
-
-<body>
-  <!-- Bot và nhạc -->
-  <img src="https://i.postimg.cc/zvBtGJQB/cute-robot-waving-hand-cartoon-illustration-138676-2744-preview-rev-1.png" id="mascot-bot">
-<div id="mascot-label">Phát nhạc, click 👆</div>
-
-<audio id="mascot-audio" src="https://files.catbox.moe/dha6ws.mp3"></audio>
-
-<script>
-  const mascotBot = document.getElementById("mascot-bot");
-  const mascotAudio = document.getElementById("mascot-audio");
-
-  mascotBot.addEventListener("click", function () {
-    if (mascotAudio.paused) {
-      mascotAudio.play();
-    } else {
-      mascotAudio.pause();
-    }
-  });
-</script>
-
-<style>
-  #mascot-bot {
-    position: fixed;
-    bottom: 40px;
-    right: 20px;
-    width: 80px;
-    cursor: pointer;
-    z-index: 999;
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-
-  #mascot-label {
-    position: fixed;
-    bottom: 0px;
-    right: 15px;
-    width: 90px;
-    text-align: center;
-    font-size: 13px;
-    color: pink;
-    font-weight: bold;
-    text-shadow: 0 0 4px hotpink;
-    z-index: 998;
-    pointer-events: none;
-  }
-</style>
+        // Xử lý tải ảnh về máy
+        function downloadImage() {
+            const canvas = document.getElementById('result-canvas');
+            const dataURL = canvas.toDataURL('image/png'); // Chuyển canvas thành định dạng PNG
+            
+            const link = document.createElement('a');
+            link.download = 'anh_ghep_qr_bo.png';
+            link.href = dataURL;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
 </body>
 </html>

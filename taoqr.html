@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo QR Liên Kết (Phiên Bản Cá Nhân)</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: hotpink; /* Màu chính cho các chi tiết */
+      --secondary-color: cyan;  /* Màu phụ */
+      --text-color: #fff;
+      --bg-color: #000;
+      --menu-bg: #111;
+      --border-radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka', sans-serif;
+    }
+    
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      min-height: 100vh;
+      /* Dùng nền từ code cũ nếu có ảnh bgr.png */
+      /* background-image: url('bgr.png'); */ 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-top: 50px; /* Tăng khoảng cách để tránh menu */
+      color: var(--primary-color);
+      text-shadow: 0 0 5px var(--primary-color);
+    }
+    
+    /* Input */
+    input[type="text"] {
+      width: 80%;
+      max-width: 400px;
+      padding: 12px;
+      margin: 20px 0 10px;
+      border: 2px solid var(--secondary-color);
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-color);
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 8px var(--primary-color);
+    }
+
+    /* Nút Tạo QR và Xóa QR (Kết hợp gradient từ code profile) */
+    .qr-button {
+      margin: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 50px; /* Bo tròn hơn */
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      
+      background: var(--secondary-color);
+      color: var(--bg-color);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Thêm hiệu ứng rainbow cho nút Tạo QR */
+    .qr-button.generate {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        padding: 12px 24px;
+        border-radius: 50px;
+    }
+    
+    .qr-button.generate::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50px;
+      background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7f00,
+        #ffff00,
+        #00ff00,
+        #0000ff,
+        #4b0082,
+        #9400d3
+      );
+      padding: 3px;
+      z-index: -1;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: rainbow-spin 4s linear infinite;
+    }
+    
+    @keyframes rainbow-spin {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+    }
+
+    .qr-button:hover:not(.generate) {
+      background: var(--primary-color);
+      color: var(--text-color);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Link tải xuống QR */
+    .download-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 18px;
+      background: var(--secondary-color);
+      color: var(--bg-color);
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 8px var(--secondary-color);
+    }
+
+    .download-link:hover {
+      background: var(--primary-color);
+      color: var(--text-color);
+      box-shadow: 0 0 12px var(--primary-color);
+    }
+    
+    /* Menu ba gạch và menu bên (Lấy từ code profile) */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.5em;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s;
+    }
+    .menu-toggle:hover { background: #C71585; } /* Darker pink */
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: var(--menu-bg);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+      padding-top: 60px;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border-right: 3px solid var(--primary-color);
+    }
+    
+    .side-menu.open {
+      left: 0;
+    }
+    
+    .side-menu h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      text-align: center;
+      color: var(--secondary-color);
+    }
+    
+    .side-menu a {
+      display: block;
+      text-decoration: none;
+      padding: 12px 20px;
+      margin: 4px 10px;
+      background: #222;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+      border: 1px solid var(--secondary-color);
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .side-menu a:hover {
+      background: var(--primary-color);
+      color: var(--bg-color);
+      transform: translateX(5px);
+    }
+
+    .footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 14px;
+      background: rgba(17, 17, 17, 0.7);
+      border-top: 2px dashed var(--primary-color);
+      color: #fff;
+      width: 100%;
+    }
+    
+    /* Bot phát nhạc (Lấy từ code profile) */
+    .music-bot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-color);
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, background 0.3s;
+      z-index: 999;
+    }
+    .music-bot:hover {
+      transform: scale(1.05);
+      background: #C71585; 
+    }
+    .music-bot i {
+      font-size: 1.2em;
+      animation: spin 2s linear infinite;
+      display: none;
+    }
+    .music-bot.playing i { display: block; }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* QR Code Canvas Styling */
+    #qr-container canvas {
+        display: block;
+        margin: 20px auto;
+        border: 5px solid var(--primary-color);
+        border-radius: 12px;
+        box-shadow: 0 0 15px var(--primary-color);
+    }
+    
+    .color-picker {
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-toggle" onclick="document.querySelector('.side-menu').classList.toggle('open')">
+    <i class="fas fa-bars"></i>
+  </button>
+  
+  <div class="side-menu">
+    <h2><i class="fas fa-gem"></i> Menu</h2>
+    <a href="index.html">🏠 Trang Chủ</a>
+    <a href="profile.html"🌚 Bio Của Admin</a>
+    <a href="banggia.html">💰 Bảng Giá</a>
+    <a href="khodv.html">📦 Kho Dịch Vụ Khách</a>
+    <a href="khoad.html">🔑 Kho Dịch Vụ Admin</a>
+    <a href="taoqr.html"><i class="fas fa-qrcode"></i> Tạo mã QR</a>
+    <a href="muachu.html"><i class="fas fa-cloud"></i> Mưa chữ</a>
+   </div>
+
+  <h1>✨ Tạo QR Liên Kết ✨</h1>
+  <input type="text" id="link-input" placeholder="Nhập link tại đây ví dụ: https://trongnghia1759.github.io/">
+  <div class="color-picker">
+    Màu QR: <input type="color" id="color-picker" value="#00f7ff">
+  </div>
+  <br>
+  
+  <button class="qr-button generate" onclick="generateQR()">
+    <i class="fas fa-magic"></i> Tạo QR
+  </button>
+  <button class="qr-button" onclick="clearQR()">
+    <i class="fas fa-times-circle"></i> Xóa QR
+  </button>
+
+  <div id="qr-container"></div>
+  <a id="download-link" class="download-link" download="qr-code.png" style="display:none;">
+    <i class="fas fa-download"></i> Tải QR về máy
+  </a>
+  
+  <div id="music-bot" class="music-bot" onclick="toggleMusic()">
+    <i class="fas fa-compact-disc"></i>
+    <span>🎵 Nghe Nhạc Chill</span>
+  </div>
+  
+  <audio id="chill-music" loop>
+    </audio>
+
+
+  <div class="footer">
+    ⚠️ Link sai vẫn tạo QR nhưng không quét được <br><br>
+    FB: Đàm Trọng Nghĩa (Bo)<br>
+    TikTok: bo1759
+  </div>
+
+  <script>
+    // GIỮ NGUYÊN CHỨC NĂNG TẠO QR CỦA FILE GỐC
+    function generateQR() {
+      const link = document.getElementById("link-input").value.trim();
+      const color = document.getElementById("color-picker").value;
+      const qrContainer = document.getElementById("qr-container");
+      const downloadLink = document.getElementById("download-link");
+
+      qrContainer.innerHTML = "";
+      downloadLink.style.display = "none";
+
+      if (link === "") {
+        alert("🌸 Vui lòng nhập liên kết.");
+        return;
+      }
+
+      const canvas = document.createElement("canvas");
+      // Sử dụng thư viện QRCode.js
+      QRCode.toCanvas(canvas, link, {
+        color: {
+          dark: color,
+          light: "#00000000" // nền trong suốt
+        },
+        width: 256
+      }, function (error) {
+        if (error) {
+          console.error(error);
+          alert("⚠️ Lỗi khi tạo mã QR!");
+        } else {
+          qrContainer.appendChild(canvas);
+          downloadLink.href = canvas.toDataURL("image/png");
+          downloadLink.style.display = "inline-block";
+        }
+      });
+    }
+
+    function clearQR() {
+      document.getElementById("qr-container").innerHTML = "";
+      document.getElementById("download-link").style.display = "none";
+    }
+
+    // Enter để tạo QR
+    document.getElementById("link-input").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        generateQR();
+      }
+    });
+    
+    // CHỨC NĂNG MUSIC BOT MỚI
+    const musicBot = document.getElementById('music-bot');
+    const chillMusic = document.getElementById('chill-music');
+
+    function toggleMusic() {
+      // Kiểm tra xem đã thêm nguồn nhạc chưa
+      if (chillMusic.hasChildNodes()) {
+          if (chillMusic.paused) {
+            chillMusic.play();
+            musicBot.classList.add('playing');
+            musicBot.querySelector('span').textContent = '🔊 Đang Phát Nhạc...';
+          } else {
+            chillMusic.pause();
+            musicBot.classList.remove('playing');
+            musicBot.querySelector('span').textContent = '🎵 Nghe Nhạc Chill';
+          }
+      } else {
+          alert('Chức năng nghe nhạc chưa có file nhạc, Bo ạ! Vui lòng thêm thẻ <source> vào <audio id="anhthuongemnhatma.mp3">.');
+      }
+    }
+  </script>
+</body>
+</html>

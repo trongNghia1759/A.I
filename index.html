@@ -1,202 +1,432 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Ghép Mã QR vào Ảnh</title>
-    <style>
-        /* CSS Cơ Bản */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .section {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        h2 {
-            color: #333;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        .image-selection img {
-            width: 150px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 10px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            border-radius: 4px;
-            transition: border-color 0.2s;
-        }
-        .image-selection img.selected {
-            border-color: #007bff;
-        }
-        #result-canvas {
-            display: block;
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            max-width: 100%;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: #1e7e34;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevBase - Đàm Trọng Nghĩa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* 1. THAY ĐỔI BIẾN MÀU: Tăng cường sắc độ tối và neon/glow */
+    :root {
+      --cool-black: #111111; /* Màu đen sâu hơn */
+      --dark-pink: #FF69B4; /* Hot Pink - Màu tím hồng sáng hơn, dễ tạo hiệu ứng Neon */
+      --light-glow: #F0F0F0; /* Màu sáng cho chữ */
+      --text-color: #E0E0E0; /* Màu chữ sáng cho nền tối */
+      --border-radius: 15px;
+      --neon-shadow: 0 0 8px #FF69B4, 0 0 15px #FF1493; /* Bóng đổ neon */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* 2. HIỆU ỨNG GLASSMORHISM CHO CONTAINER CHÍNH */
+    body {
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      /* Cần file 'bgr.png' */
+      background-image: url('bgr.png'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      /* Thêm hiệu ứng nền di chuyển nhẹ */
+      animation: backgroundPan 60s linear infinite alternate;
+    }
+    @keyframes backgroundPan {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+    }
+
+
+    .bio-container {
+      max-width: 650px; /* Rộng hơn một chút */
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5); /* Nền tối trong suốt */
+      backdrop-filter: blur(10px); /* Hiệu ứng Kính Mờ */
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1); /* Viền mỏng */
+      border-radius: var(--border-radius);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7); /* Bóng đổ sâu hơn */
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    /* 3. HIỆU ỨNG NEON CHO TIÊU ĐỀ */
+    .web-name {
+        font-size: 3.5em; /* Lớn hơn */
+        font-weight: 900;
+        color: var(--dark-pink);
+        margin-top: -10px; 
+        text-shadow: var(--neon-shadow); /* Bóng đổ Neon */
+        letter-spacing: 3px;
+        transition: color 0.3s ease;
+    }
+    
+    .slogan {
+        font-size: 1.3em;
+        font-weight: 500;
+        color: var(--light-glow); 
+        margin-bottom: 30px;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+    
+    .introduction {
+        font-size: 1.1em;
+        color: var(--text-color);
+        margin-bottom: 40px;
+        line-height: 1.7;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05); /* Nền trong suốt siêu mờ */
+        border-radius: var(--border-radius);
+        text-align: center;
+        border: 1px solid var(--dark-pink); /* Viền nổi bật */
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+    }
+    
+    .highlight {
+        color: #00FFFF; /* Màu Cyan Neon nổi bật */
+        font-weight: 700;
+        text-shadow: 0 0 5px #00FFFF;
+    }
+    /* Kết thúc Tên Web, Slogan và Giới Thiệu */
+
+   
+
+
+   
+
+    /* 5. HIỆU ỨNG NÚT LIÊN KẾT MẠNH MẼ HƠN */
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px; /* Khoảng cách lớn hơn */
+      margin-bottom: 40px;
+    }
+    .link-btn {
+      display: flex; /* Dùng flex để căn giữa icon và text */
+      justify-content: center;
+      align-items: center;
+      padding: 18px; /* Dày hơn */
+      text-decoration: none;
+      color: #fff;
+      background-color: var(--cool-black);
+      border: 2px solid var(--dark-pink); /* Viền nhẹ */
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1em;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transition mượt mà */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .link-btn:hover {
+      background-color: var(--dark-pink);
+      color: var(--cool-black); /* Chữ đen khi hover */
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5); /* Bóng đổ nổi bật hơn */
+    }
+    /* Thêm hiệu ứng lấp lánh khi hover */
+    .link-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: transform 0.5s ease;
+        transform: skewX(-20deg);
+        z-index: 0;
+    }
+    .link-btn:hover::after {
+        transform: translate(150%) skewX(-20deg);
+    }
+
+    .link-btn i {
+      margin-right: 12px;
+      font-size: 1.2em;
+    }
+
+   /* 6. TĂNG CƯỜNG VIỀN RAINBOW */
+    .rainbow-border {
+      display: flex; /* Đảm bảo nút này cũng dùng flex */
+      justify-content: center;
+      align-items: center;
+      background-color: var(--cool-black); 
+      position: relative;
+      color: #fff;
+      padding: 18px 25px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 0;
+      font-weight: 700;
+      font-size: 1.1em;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+      text-decoration: none; /* Quan trọng nếu dùng thẻ <a> */
+    }
+
+    .rainbow-border::before {
+      content: '';
+      position: absolute;
+      inset: -5px; /* Kéo viền rộng ra */
+      border-radius: 55px; /* Điều chỉnh để phù hợp với inset */
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        #ff0000,
+        #ff7f00,
+        #ffff00,
+        #00ff00,
+        #0000ff,
+        #4b0082,
+        #9400d3,
+        #ff0000
+      );
+      /* Hiệu ứng xoay liên tục */
+      animation: rotateRainbow 4s linear infinite; 
+      padding: 5px; /* Độ dày của viền */
+      z-index: -1;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.9;
+    }
+    @keyframes rotateRainbow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .rainbow-border:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+    }
+    .rainbow-border i { margin-right: 12px; font-size: 1.2em; }
+    
+    /* 7. PHẦN CHÂN TRANG VÀ QR */
+    .footer-section {
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2); /* Viền sáng mờ */
+      margin-top: 20px;
+    }
+    .qr-heading {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      color: var(--dark-pink);
+      text-shadow: var(--neon-shadow);
+    }
+    .qr-code {
+      width: 150px;
+      height: 150px;
+      border: 5px solid #00FFFF; /* Viền QR màu Cyan */
+      border-radius: var(--border-radius);
+      display: block;
+      margin: 0 auto;
+      /* Cần file 'mb.png' */
+      content: url('mb.png');
+      transition: transform 0.3s ease;
+    }
+    .qr-code:hover {
+        transform: scale(1.1);
+    }
+    
+    /* 8. HIỆU ỨNG MENU & MUSIC BOT */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      background: var(--dark-pink);
+      color: var(--cool-black); /* Chữ đen/nổi bật trên nền hồng */
+      border: 3px solid #fff; /* Viền trắng */
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.5em;
+      box-shadow: 0 0 15px var(--dark-pink);
+      transition: background 0.3s;
+    }
+    .menu-toggle:hover { background: var(--cool-black); color: var(--dark-pink); }
+    .sidebar-menu {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: rgba(17, 17, 17, 0.95); /* Menu nền đen/tối */
+      backdrop-filter: blur(5px);
+      box-shadow: 5px 0 15px rgba(255, 105, 180, 0.5);
+      padding-top: 60px;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-menu.active { left: 0; }
+    .sidebar-menu a {
+      padding: 15px 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background 0.2s, color 0.2s;
+    }
+    .sidebar-menu a:hover {
+      background: var(--dark-pink);
+      color: #fff;
+    }
+
+    .music-bot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--cool-black);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      border: 2px solid var(--dark-pink);
+      box-shadow: 0 0 15px var(--dark-pink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
+      z-index: 999;
+    }
+    .music-bot:hover {
+      transform: scale(1.1);
+      background: var(--dark-pink);
+      color: var(--cool-black);
+      box-shadow: 0 5px 20px rgba(255, 105, 180, 0.7);
+    }
+    .music-bot i {
+      font-size: 1.3em;
+      animation: spin 2s linear infinite;
+      display: none;
+    }
+    .music-bot.playing i { 
+        display: block; 
+        color: var(--dark-pink);
+        text-shadow: var(--neon-shadow);
+    }
+    .music-bot:hover i { color: var(--cool-black); text-shadow: none; }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .bio-container { padding: 30px 20px; }
+      .web-name { font-size: 2.8em; }
+      .name { font-size: 2.2em; }
+      .avatar-wrapper { width: 160px; height: 160px; }
+      .link-btn, .rainbow-border { font-size: 1.1em; padding: 15px; }
+      .menu-toggle { top: 10px; left: 10px; }
+    }
+    @media (max-width: 480px) {
+      .web-name { font-size: 2.5em; }
+      .name { font-size: 2em; }
+      .link-btn, .rainbow-border { font-size: 1em; padding: 12px; }
+      .music-bot { bottom: 10px; right: 10px; padding: 10px 15px; }
+      .sidebar-menu { width: 200px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Công Cụ Ghép Mã QR vào Ảnh</h1>
+  <button id="menu-toggle" class="menu-toggle">
+    <i class="fas fa-bars"></i>
+  </button>
 
-        <div class="section">
-            <h2>Bước 1: Chọn Ảnh Nền</h2>
-            <div class="image-selection">
-                <img id="img1" src="vienqr1.pjg" alt="Ảnh Nền 1" data-url="https://via.placeholder.com/600x400?text=Ảnh+Nền+1" onclick="selectBackground(this)">
-                <img id="img2" src="https://via.placeholder.com/300x200/4e73df/ffffff?text=Ảnh+Nền+2" alt="Ảnh Nền 2" data-url="https://via.placeholder.com/600x400/4e73df/ffffff?text=Ảnh+Nền+2" onclick="selectBackground(this)">
-            </div>
-            <p>Ảnh nền đã chọn: <span id="selected-bg-name">Chưa chọn</span></p>
-        </div>
+  <nav id="sidebar-menu" class="sidebar-menu">
+    <a href="index.html">🏠 Trang Chủ</a>
+    <a href="profile.html">🌚 Bio Của Admin</a>
+    <a href="banggia.html">Bảng Giá</a>
+    <a href="khodv.html">Kho Dịch Vụ Khách</a>
+    <a href="khoad.html">Kho Dịch Vụ Admin</a>
+    <a href="taoqr.html">Tạo Qr từ link</a>
+    <a href="muachu.html">Mưa Chữ</a>
+  </nav>
 
-        <div class="section">
-            <h2>Bước 2: Tải Lên Mã QR</h2>
-            <input type="file" id="qr-upload" accept="image/*">
-            <p>Mã QR đã tải: <span id="uploaded-qr-name">Chưa tải</span></p>
-        </div>
+<div class="bio-container">
+    <h1 class="web-name">
+        &lt;/DevBase&gt;
+    </h1>
+    <p class="slogan">
+        DevBase củng cố đam mê
+    </p>
 
-        <div class="section">
-            <h2>Bước 3: Tạo Ảnh Kết Quả</h2>
-            <button onclick="generateImage()">Tạo Ảnh Ghép QR</button>
-            <p id="error-message" style="color: red; margin-top: 10px;"></p>
-        </div>
+    <p class="introduction">
+        Chào mừng bạn đến với **DevBase** nơi chúng tôi cung cấp dịch vụ <span class="highlight">mạng xã hội, premium app</span> ví dụ như locket gold, capcut pro, ngl pro, telegram premium,... vân vân. và chúng tôi còn cung cấp <span class="highlight">code html</span> cho mọi người thoả sức với đam mê code,...
+    </p>
 
-        <div class="section">
-            <h2>Ảnh Kết Quả</h2>
-            <canvas id="result-canvas" width="600" height="400"></canvas>
-            <button id="download-button" style="margin-top: 10px; display: none;" onclick="downloadImage()">Tải Xuống</button>
-        </div>
+    
+    </div>
     </div>
 
-    <script>
-        // JavaScript Xử Lý Tương Tác
-        let selectedBgUrl = null;
-        let qrFile = null;
+<div id="music-bot" class="music-bot">
+    <i class="fas fa-music"></i>
+    <span id="music-status">Bật Nhạc Nền</span>
+    <audio id="background-music" loop>
+        <source src="anhthuongemnhatma.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phần tử audio.
+    </audio>
+</div>
 
-        // Xử lý chọn ảnh nền
-        function selectBackground(imgElement) {
-            // Xóa class 'selected' khỏi tất cả ảnh
-            document.querySelectorAll('.image-selection img').forEach(img => {
-                img.classList.remove('selected');
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebarMenu = document.getElementById('sidebar-menu');
+    const musicBot = document.getElementById('music-bot');
+    const backgroundMusic = document.getElementById('background-music');
+    const musicStatus = document.getElementById('music-status');
+    let isPlaying = false;
+
+    // Chức năng bật/tắt Menu
+    menuToggle.addEventListener('click', () => {
+        sidebarMenu.classList.toggle('active');
+    });
+
+    // Đóng menu khi click ra ngoài
+    document.addEventListener('click', (event) => {
+        if (!sidebarMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+            sidebarMenu.classList.remove('active');
+        }
+    });
+    
+    // Chức năng bật/tắt Nhạc nền
+    musicBot.addEventListener('click', () => {
+        if (isPlaying) {
+            backgroundMusic.pause();
+            musicBot.classList.remove('playing');
+            musicStatus.textContent = 'Bật Nhạc Nền';
+            isPlaying = false;
+        } else {
+            // Tự động phát (có thể bị chặn, cần tương tác người dùng)
+            backgroundMusic.play().then(() => {
+                musicBot.classList.add('playing');
+                musicStatus.textContent = 'Đang Phát Nhạc';
+                isPlaying = true;
+            }).catch(error => {
+                console.log("Tự động phát nhạc bị chặn:", error);
+                // Cố gắng phát lại sau khi người dùng tương tác
+                backgroundMusic.play(); 
+                musicBot.classList.add('playing');
+                musicStatus.textContent = 'Đang Phát Nhạc';
+                isPlaying = true;
             });
-
-            // Thêm class 'selected' vào ảnh vừa chọn
-            imgElement.classList.add('selected');
-            selectedBgUrl = imgElement.getAttribute('data-url');
-            document.getElementById('selected-bg-name').textContent = imgElement.alt;
         }
+    });
+</script>
 
-        // Xử lý tải file QR
-        document.getElementById('qr-upload').addEventListener('change', (event) => {
-            qrFile = event.target.files[0];
-            if (qrFile) {
-                document.getElementById('uploaded-qr-name').textContent = qrFile.name;
-            } else {
-                document.getElementById('uploaded-qr-name').textContent = 'Chưa tải';
-            }
-        });
-
-        // Xử lý nút "Tạo Ảnh Ghép QR"
-        function generateImage() {
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.textContent = '';
-            document.getElementById('download-button').style.display = 'none';
-
-            if (!selectedBgUrl || !qrFile) {
-                errorMessage.textContent = 'Vui lòng chọn Ảnh Nền và tải lên Mã QR.';
-                return;
-            }
-
-            const canvas = document.getElementById('result-canvas');
-            const ctx = canvas.getContext('2d');
-
-            const bgImage = new Image();
-            const qrImage = new Image();
-
-            // 1. Tải Ảnh Nền
-            bgImage.onload = () => {
-                // Đảm bảo Canvas có kích thước bằng ảnh nền
-                canvas.width = bgImage.width;
-                canvas.height = bgImage.height;
-                ctx.drawImage(bgImage, 0, 0);
-
-                // 2. Tải Mã QR
-                qrImage.onload = () => {
-                    // *** LOGIC GHÉP ẢNH CANVAS ***
-                    
-                    // a. Xác định kích thước và vị trí QR (ví dụ: 25% chiều rộng ảnh nền)
-                    const qrSize = Math.min(bgImage.width, bgImage.height) * 0.25; 
-                    
-                    // b. Tính toán vị trí chính giữa
-                    const x = (bgImage.width - qrSize) / 2;
-                    const y = (bgImage.height - qrSize) / 2;
-
-                    // c. Ghép mã QR vào ảnh nền
-                    ctx.drawImage(qrImage, x, y, qrSize, qrSize);
-
-                    document.getElementById('download-button').style.display = 'block';
-                    errorMessage.textContent = 'Đã tạo ảnh thành công!';
-                };
-                
-                qrImage.onerror = () => {
-                    errorMessage.textContent = 'Lỗi khi tải file Mã QR.';
-                };
-
-                // Đọc file QR đã tải lên
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    qrImage.src = e.target.result;
-                };
-                reader.readAsDataURL(qrFile);
-            };
-
-            bgImage.onerror = () => {
-                errorMessage.textContent = 'Lỗi khi tải Ảnh Nền.';
-            };
-            bgImage.src = selectedBgUrl; // Bắt đầu tải ảnh nền
-        }
-
-        // Xử lý tải ảnh về máy
-        function downloadImage() {
-            const canvas = document.getElementById('result-canvas');
-            const dataURL = canvas.toDataURL('image/png'); // Chuyển canvas thành định dạng PNG
-            
-            const link = document.createElement('a');
-            link.download = 'anh_ghep_qr_bo.png';
-            link.href = dataURL;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    </script>
 </body>
 </html>

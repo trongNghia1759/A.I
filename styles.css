@@ -1,0 +1,596 @@
+/* ========================================================================= */
+/* BIẾN (VARIABLES)                              */
+/* ========================================================================= */
+:root {
+  /* Màu chính (Tùy chọn: ưu tiên neon pink/cyan từ các đoạn cũ) */
+  --primary-color: hotpink; /* Màu chính cho các chi tiết/nổi bật */
+  --secondary-color: cyan;  /* Màu phụ/border/highlight */
+  
+  /* Màu nền & chữ (Ưu tiên dark mode) */
+  --bg-color: #000;         /* Nền tối ưu tiên */
+  --secondary-bg: #111;    /* Nền phụ (cho menu, card) */
+  --text-color: #fff;      /* Màu chữ chính */
+  --text-color-dark: #333; /* Màu chữ tối (cho card nền sáng) */
+  
+  /* Màu Neon/Glow */
+  --neon-pink: #ff4dd2;    /* Hồng neon */
+  --neon-cyan: #00f7ff;    /* Cyan neon */
+  --neon-green: #00ff99;   /* Xanh neon */
+  
+  /* Cấu trúc */
+  --border-radius: 12px;
+  --border-color: #333;
+}
+
+/* ========================================================================= */
+/* GLOBAL & RESET                               */
+/* ========================================================================= */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* Kết hợp font (Ưu tiên Fredoka, thêm Roboto/Montserrat cho typography) */
+  font-family: 'Fredoka', 'Roboto', 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 14px; /* Giảm kích thước chữ toàn trang */
+  
+  /* Thiết lập nền ảnh (Nếu có) */
+  /* background-image: url('bgr.png'); */ 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  
+  overflow-x: hidden; /* Tránh thanh cuộn ngang do menu */
+  transition: margin-left 0.3s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/* ========================================================================= */
+/* TYPOGRAPHY                                */
+/* ========================================================================= */
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-top: 50px;
+  color: var(--primary-color);
+  text-shadow: 0 0 5px var(--primary-color);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--neon-green);
+  text-align: center;
+  margin: 30px 0 20px;
+  position: relative;
+  font-size: 1.8em;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: var(--neon-green);
+  margin: 10px auto 0;
+}
+
+.desc {
+  color: var(--neon-cyan);
+  margin-top: 10px;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+/* ========================================================================= */
+/* LAYOUT & CARD                            */
+/* ========================================================================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin: 20px auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  color: var(--text-color-dark);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 900px;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.app-card {
+  background-color: #e6e6e6; 
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.app-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 255, 153, 0.2);
+}
+
+.app-card-content {
+  padding: 20px;
+  text-align: center;
+  color: #1f1f1f;
+}
+
+/* ========================================================================= */
+/* HEADER & FOOTER                              */
+/* ========================================================================= */
+header {
+  padding: 40px 20px 20px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+footer, .footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 2px solid var(--border-color);
+  margin-top: 40px;
+  font-size: 14px; 
+  background: rgba(17, 17, 17, 0.7);
+  width: 100%;
+}
+
+/* ========================================================================= */
+/* INPUT & BUTTONS                          */
+/* ========================================================================= */
+/* Input chung */
+input[type="text"], #userText {
+  width: 80%;
+  max-width: 500px;
+  padding: 12px;
+  margin: 20px auto 10px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  resize: none;
+  display: block;
+}
+
+input[type="text"]:focus, #userText:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Nút chung */
+.qr-button, .button, .download-button, #setTextButton {
+  margin: 8px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px; 
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+  background: var(--secondary-color);
+  color: var(--bg-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: block;
+  max-width: 240px;
+}
+
+.qr-button:hover:not(.generate), .button:hover, .download-button:hover, #setTextButton:hover {
+  background: var(--primary-color);
+  color: var(--text-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Nút Tạo QR (Rainbow) */
+.qr-button.generate {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  padding: 12px 24px;
+  border-radius: 50px;
+}
+
+.qr-button.generate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  background: linear-gradient(
+    45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3
+  );
+  background-size: 200% 100%;
+  padding: 3px;
+  z-index: -1;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rainbow-spin 4s linear infinite;
+}
+
+/* Nút Download (Link) */
+.download-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 18px;
+  background: var(--secondary-color);
+  color: var(--bg-color);
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 8px var(--secondary-color);
+}
+
+.download-link:hover {
+  background: var(--primary-color);
+  color: var(--text-color);
+  box-shadow: 0 0 12px var(--primary-color);
+}
+
+/* Rainbow Button Wrapper (cho Profile) */
+.rainbow-wrapper {
+  position: relative;
+  display: block;
+  width: 85%;
+  max-width: 240px;
+  margin: 12px auto;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
+  background-size: 600% 600%;
+  animation: moveRainbow 5s linear infinite;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.rainbow-button-text {
+  display: block;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 13px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Download Button Triple Color Border */
+.triple-color-btn-wrapper {
+  position: relative;
+  display: block;
+  width: 85%;
+  max-width: 240px;
+  margin: 12px auto;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(270deg, hotpink, limegreen, cyan, hotpink);
+  background-size: 400% 400%;
+  animation: tripleColorMove 5s linear infinite;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================================================= */
+/* MENU BAR                                 */
+/* ========================================================================= */
+/* Nút Menu Toggle */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10001; /* Z-index cao nhất */
+  background: var(--neon-pink);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.5em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
+.menu-toggle:hover { background: #C71585; } 
+
+/* Side Menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Độ rộng lớn nhất từ các đoạn cũ */
+  width: 250px;
+  height: 100%;
+  background: var(--secondary-bg);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  padding-top: 60px;
+  z-index: 10000;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-right: 3px solid var(--primary-color);
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+.side-menu h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  text-align: center;
+  color: var(--secondary-color);
+}
+.side-menu h2::after { content: none; } /* Bỏ gạch dưới h2 trong menu */
+
+.side-menu a {
+  display: block;
+  text-decoration: none;
+  padding: 12px 20px;
+  margin: 4px 10px;
+  background: #222;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.side-menu a:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+  transform: translateX(5px);
+}
+
+.menu-section-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 10px 0; 
+}
+
+/* ========================================================================= */
+/* KHÁC                                    */
+/* ========================================================================= */
+/* Bot phát nhạc */
+.music-bot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, background 0.3s;
+  z-index: 999;
+}
+.music-bot:hover {
+  transform: scale(1.05);
+  background: #C71585; 
+}
+.music-bot i {
+  font-size: 1.2em;
+  animation: spin 2s linear infinite;
+  display: none;
+}
+.music-bot.playing i { display: block; }
+
+/* QR Code Canvas */
+#qr-container canvas {
+  display: block;
+  margin: 20px auto;
+  border: 5px solid var(--primary-color);
+  border-radius: 12px;
+  box-shadow: 0 0 15px var(--primary-color);
+}
+
+/* Particle Canvas */
+canvas {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#centerText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 15px #fff, 0 0 25px var(--primary-color); 
+  z-index: 2;
+  white-space: pre-line;
+  display: none;
+}
+
+#errorMsg {
+  position: fixed;
+  top: 52%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ff4d4f;
+  font-size: 18px;
+  display: none;
+  text-shadow: 0 0 5px #ff4d4f;
+  z-index: 1000;
+}
+
+/* Overlay mật khẩu */
+#overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+}
+#overlay input {
+  padding: 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 10px;
+  color: var(--text-color-dark);
+}
+#overlay button {
+  padding: 10px 20px;
+  font-size: 13px;
+  background: var(--neon-cyan);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#overlay button:hover { 
+    background: #00cfc0; 
+}
+
+/* Mascot Bot */
+#mascot-bot {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  width: 80px;
+  cursor: pointer;
+  z-index: 999;
+  animation: float 3s ease-in-out infinite;
+}
+#mascot-label {
+  position: fixed;
+  bottom: 0px;
+  right: 15px;
+  width: 90px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-shadow: 0 0 4px var(--primary-color);
+  z-index: 998;
+  pointer-events: none;
+}
+
+/* Customer Comments */
+.customer-comments {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 16px;
+  background-color: #1a1a1a; 
+  border-radius: 10px;
+}
+.comment-meta {
+  font-size: 13px;
+  color: #00bfff;
+  text-shadow: 0 0 5px #00bfff;
+  margin-bottom: 6px;
+}
+.comment-text {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+/* ========================================================================= */
+/* ANIMATIONS                               */
+/* ========================================================================= */
+@keyframes rainbow-spin {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+@keyframes moveRainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes tripleColorMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ========================================================================= */
+/* MEDIA QUERIES                           */
+/* ========================================================================= */
+@media (max-width: 600px) {
+  h1 { font-size: 20px; }
+  .menu-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 1.2em; }
+  .side-menu { width: 200px; left: -200px; }
+  .music-bot { bottom: 10px; right: 10px; padding: 8px 12px; }
+  #mascot-bot { bottom: 30px; right: 10px; width: 60px; }
+  #mascot-label { right: 5px; width: 70px; font-size: 11px; }
+  .qr-button, .button, .download-button { max-width: 100%; width: 100%; }
+}

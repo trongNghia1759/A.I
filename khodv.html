@@ -1,94 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<link rel="stylesheet" href="styles.css"> 
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kho Dịch Vụ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    :root {
-      --cool-pink: #000000; 
-      --dark-pink: #C71585;
-      --light-pink: #000000;
-      --text-color: #333;
-      --border-radius: 12px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body {
-      color: #fff;
-      min-height: 100vh;
-      padding: 20px;
-      background-image: url('bgr.png'); 
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-    /* Overlay mật khẩu */
-    #overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-    #overlay input {
-      padding: 10px;
-      font-size: 13px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 10px;
-    }
-    #overlay button {
-      padding: 10px 20px;
-      font-size: 13px;
-      background: #00ffe1;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    #overlay button:hover { background: #00cfc0; }
-    /* Nội dung chính ẩn lúc đầu */
-    #content {
-      display: none;
-      width: 100%;
-      animation: fadeIn 0.7s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    h1 { margin: 20px 0; text-align: center; }
-    .section { margin: 20px 0; padding: 15px; background: rgba(0,0,0,0.5); border-radius: 10px; }
-    .section h2 { margin-bottom: 10px; }
-    .item { margin: 8px 0; }
-    .item a { color: #fff; text-decoration: none; }
-    .item a:hover { text-decoration: underline; }
-    nav.sidebar-menu {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    nav.sidebar-menu a {
-      color: #fff;
-      text-decoration: none;
-      background: rgba(255,255,255,0.1);
-      padding: 8px 15px;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
-    nav.sidebar-menu a:hover {
-      background: var(--dark-pink);
-    }
-  </style>
+  <link rel="stylesheet" href="khoad_style.css"> 
 </head>
 <body>
-  <!-- Overlay nhập mật khẩu -->
   <div id="overlay">
     <h2 style="color:white; margin-bottom:15px;">Nhập mật khẩu để vào kho dịch vụ</h2>
     <input type="password" id="password" placeholder="Mật khẩu...">
@@ -96,17 +17,15 @@
     <p id="error" style="color:red; margin-top:10px; display:none;">Sai mật khẩu!</p>
   </div>
 
-  <!-- Nội dung chính -->
   <div id="content">
-    <!-- Menu bên -->
     <nav id="sidebar-menu" class="sidebar-menu">
-     <a href="index.html">🏠 Trang Chủ</a>
-    <a href="profile.html">🌚 Bio Của Admin</a>
+      <a href="index.html">Trang Chủ</a>
       <a href="banggia.html">Bảng Giá</a>
-     <a href="khodv.html">Kho Dịch Vụ Khách</a>
+      <a href="khodv.html">Kho Dịch Vụ Khách</a>
       <a href="khoad.html">Kho Dịch Vụ Admin</a>
       <a href="taoqr.html">Tạo QR từ link</a>
       <a href="muachu.html">Mưa Chữ</a>
+      <a href="share.html">Nguồn Tài Nguyên Miễn Phí</a>
     </nav>
 
     <h1>📦 Kho Dịch Vụ 📦</h1>
@@ -172,7 +91,8 @@
   <script>
     function checkPassword() {
       const input = document.getElementById("password").value;
-      if (input === "t.nghia1759") {
+      // Mật khẩu cứng: "damtrongnghia1759"
+      if (input === "damtrongnghia1759") { 
         document.getElementById("overlay").style.display = "none";
         document.getElementById("content").style.display = "block";
       } else {

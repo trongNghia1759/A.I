@@ -1,169 +1,31 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<link rel="stylesheet" href="styles.css"> 
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bảng Giá Dịch Vụ MXH</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <style>
-    :root {
-      --cool-pink: #ff4dd2; /* Hồng nổi bật */
-      --dark-pink: #C71585;
-      --light-pink: #ff99dd;
-      --text-color: #333;
-      --border-radius: 12px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      color: #fff;
-      min-height: 100vh;
-      padding: 20px;
-      background-image: url('bgr.png'); 
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: var(--border-radius);
-      padding: 20px;
-      margin: 20px 0;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      color: #000;
-      transition: all 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-    }
-
-    .card h3 {
-      margin-bottom: 12px;
-      font-size: 1.4em;
-      color: var(--dark-pink);
-    }
-
-    .card ul, .text-list {
-      margin-left: 20px;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      margin: 5px 0;
-    }
-
-    .section-title {
-      margin: 12px 0 6px;
-      font-weight: 700;
-      color: var(--cool-pink);
-    }
-
-    .section-header {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:12px;
-      margin:30px 0 10px;
-    }
-    .section-header__line {
-      width:100%;
-      border:none;
-      border-top:2px solid #fff;
-      opacity:.9;
-    }
-    .section-header__title {
-      margin:0;
-      text-align:center;
-      font-weight:700;
-      font-size:clamp(20px,2.5vw,28px);
-      letter-spacing:.2px;
-      color: #fff;
-    }
-
-    /* Menu 3 gạch */
-    .menu-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1001;
-      background: var(--cool-pink);
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1.5em;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: background 0.3s;
-    }
-    .menu-toggle:hover { background: var(--dark-pink); }
-
-    .sidebar-menu {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-      padding-top: 60px;
-      z-index: 1000;
-      transition: left 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar-menu.active { left: 0; }
-
-    .sidebar-menu a {
-      padding: 15px 20px;
-      text-decoration: none;
-      color: var(--text-color);
-      font-weight: 600;
-      border-bottom: 1px solid var(--light-pink);
-      transition: background 0.2s;
-    }
-    .sidebar-menu a:hover {
-      background: var(--light-pink);
-      color: var(--dark-pink);
-    }
-
-    html { scroll-behavior: smooth; }
-  </style>
+  <link rel="stylesheet" href="banggia_style.css"> 
 </head>
 <body>
 
 <div class="container">
- <!-- Nút menu -->
-  <button id="menu-toggle" class="menu-toggle">
+ <button id="menu-toggle" class="menu-toggle">
     <i class="fas fa-bars"></i>
   </button>
 
-  <!-- Menu bên -->
   <nav id="sidebar-menu" class="sidebar-menu">
-    <a href="index.html">🏠 Trang Chủ</a>
-    <a href="profile.html">🌚 Bio Của Admin</a>
-    <a href="banggia.html">Bảng Giá</a>
-    <a href="khodv.html">Kho Dịch Vụ Khách</a>
+      <a href="index.html">Trang Chủ</a>
+      <a href="banggia.html">Bảng Giá</a>
+      <a href="khodv.html">Kho Dịch Vụ Khách</a>
       <a href="khoad.html">Kho Dịch Vụ Admin</a>
-    <a href="taoqr.html">Tạo Qr từ link</a>
-    <a href="muachu.html">Mưa Chữ</a>
-  </nav>
+      <a href="taoqr.html">Tạo QR từ link</a>
+      <a href="muachu.html">Mưa Chữ</a>
+      <a href="share.html">Nguồn Tài Nguyên Miễn Phí</a>
+    </nav>
 
-  <!-- Lưu ý -->
   <div class="card">
     <h3>🚀 Lưu Ý - Không Tuân Thủ Những Điều Này Sẽ Không Được Hoàn Tiền</h3>
     <ul>
@@ -174,7 +36,6 @@
     </ul>
   </div>
 
-  <!-- Dịch vụ Locket -->
   <div class="section-header">
     <hr class="section-header__line">
     <h2 class="section-header__title">Dịch Vụ Locket Widget</h2>
@@ -251,7 +112,6 @@
     </div>
   </div>
 
-  <!-- Dịch vụ MXH -->
   <div class="section-header">
     <hr class="section-header__line">
     <h2 class="section-header__title">Dịch Vụ Mạng Xã Hội</h2>
@@ -285,7 +145,6 @@
     </ul>
   </div>
 
-  <!-- Nạp game -->
   <div class="section-header">
     <hr class="section-header__line">
     <h2 class="section-header__title">Giá Nạp Game</h2>
@@ -305,7 +164,6 @@
     </ul>
   </div>
 
-  <!-- App Premium -->
   <div class="section-header">
     <hr class="section-header__line">
     <h2 class="section-header__title">App Pro - Premium</h2>
@@ -333,7 +191,6 @@
   </div>
 </div>
 
-<!-- Script mở menu -->
 <script>
   const toggleBtn = document.getElementById("menu-toggle");
   const sidebar = document.getElementById("sidebar-menu");

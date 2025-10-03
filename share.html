@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<link rel="stylesheet" href="styles.css"> 
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đàm Trọng Nghĩa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+   <button class="menu-toggle">☰</button>
+    <div class="side-menu">
+        <a href="index.html">Trang Chủ</a>
+      <a href="banggia.html">Bảng Giá</a>
+      <a href="khodv.html">Kho Dịch Vụ Khách</a>
+      <a href="khoad.html">Kho Dịch Vụ Admin</a>
+      <a href="taoqr.html">Tạo QR từ link</a>
+      <a href="muachu.html">Mưa Chữ</a>
+      <a href="share.html">Nguồn Tài Nguyên Miễn Phí</a>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>DEV BASE</h1>
+            <p>Kho tài nguyên miễn phí.</p>
+        </header>
+
+        <main>
+            <h2>Tài Nguyên Miễn Phí.</h2>
+            
+             <div class="app-grid">
+                <div class="app-card">
+                 <img src="hanhtinhtim.png" alt="Hình ảnh ứng dụng 1">
+                    <div class="app-card-content">
+                        <h3>Mô Phỏng Hành Tinh</h3>
+                        <p>Mô phỏng một hành tinh trong giải ngân hà, có màu tím được cấu tạo từ các hạt tím li ti,...</p>
+                        <p class="app-price">Loại: HTML</p>
+                        <a href="https://www.mediafire.com/file/h4wwc5nmi51d4c7/thienhatim.html/file" class="download-button">Tải Xuống</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                 <img src="locketgoldv17.png" alt="Hình ảnh ứng dụng 1">
+                    <div class="app-card-content">
+                        <h3>Config Shadow Locket Gold V17</h3>
+                        <p>Config shadowrocket Locket Gold V17. Up locket lên gold 3s</p>
+                        <p class="app-price">Loại: Config Shadowrocket</p>
+                        <a href="https://www.mediafire.com/file/xhfh48z98u68vtv/%25F0%259F%258C%259ALocketV17_TNghia1759.conf/file" class="download-button">Tải Xuống</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                 <img src="minecraft.png" alt="Hình ảnh ứng dụng 1">
+                    <div class="app-card-content">
+                        <h3>MINECRAFT 1.21.92</h3>
+                        <p>Tải xuống Minecraft phiên bản 1.21.92 cho thiết bị điện thoại android một cách miễn phí</p>
+                        <p class="app-price">Loại: APK</p>
+                        <a href="https://www.mediafire.com/file/osyo4mdimnjcdie/Minecraft-1.21.92-TNghia1759.apk/file" class="download-button">Tải Xuống</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Kho Tài Nguyên Đa Nền Tảng Miễn Phí</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sideMenu = document.querySelector('.side-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            sideMenu.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

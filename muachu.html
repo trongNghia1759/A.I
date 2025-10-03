@@ -1,232 +1,27 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<link rel="stylesheet" href="styles.css"> 
+
   <meta charset="UTF-8">
   <title>Mưa Chữ Tình Yêu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* -------------------- Reset & Body Styles -------------------- */
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #000;
-      height: 100%;
-      width: 100%;
-      font-family: Arial, sans-serif;
-    }
-
-    /* -------------------- Canvas & Text Effects -------------------- */
-    canvas {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
-
-    #centerText {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 48px;
-      font-weight: bold;
-      color: #fff;
-      text-align: center;
-      text-shadow: 0 0 15px #fff, 0 0 25px #f584b7;
-      z-index: 2;
-      white-space: pre-line;
-      display: none;
-    }
-
-    /* -------------------- UI Elements -------------------- */
-    #userText, #setTextButton, #errorMsg, #startButton {
-      z-index: 1000;
-    }
-
-    #userText {
-      position: fixed;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 20px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid #f584b7;
-      width: 80vw;
-      resize: none;
-      display: block;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-    
-    #userText::placeholder {
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    #setTextButton {
-      position: fixed;
-      top: 45%;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px 20px;
-      font-size: 20px;
-      border-radius: 8px;
-      background-color: #f584b7;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      display: block;
-      box-shadow: 0 0 10px #f584b7;
-      transition: background-color 0.3s, box-shadow 0.3s;
-    }
-    
-    #setTextButton:hover {
-        background-color: #ff85c1;
-        box-shadow: 0 0 15px #ff85c1;
-    }
-
-    #errorMsg {
-      position: fixed;
-      top: 52%;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ff4d4f;
-      font-size: 18px;
-      display: none;
-      text-shadow: 0 0 5px #ff4d4f;
-    }
-
-    #startButton {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px 40px;
-      font-size: 24px;
-      font-weight: bold;
-      background-color: #f584b7;
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      cursor: pointer;
-      z-index: 1001;
-      display: none;
-      box-shadow: 0 0 20px #f584b7;
-      transition: background-color 0.3s, box-shadow 0.3s;
-    }
-    
-    #startButton:hover {
-        background-color: #ff85c1;
-        box-shadow: 0 0 25px #ff85c1;
-    }
-
-    /* -------------------- Menu ba gạch -------------------- */
-.menu-toggle {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    font-size: 20px; /* Nhỏ hơn nữa */
-    background: #f584b7;
-    color: white;
-    border: none;
-    padding: 6px 10px; /* Padding nhỏ hơn */
-    border-radius: 6px; /* Bo góc nhỏ hơn */
-    cursor: pointer;
-    z-index: 2100;
-    box-shadow: 0 0 6px rgba(245, 132, 183, 0.6);
-    transition: all 0.3s ease;
-}
-
-.menu-toggle:hover {
-    background-color: #ff85c1;
-    box-shadow: 0 0 10px #ff85c1;
-}
-
-/* -------------------- Side Menu -------------------- */
-.side-menu {
-    position: fixed;
-    top: 0;
-    left: -200px; /* Đảm bảo menu đóng hoàn toàn */
-    width: 180px;
-    height: 100%;
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 15px; /* Giảm padding tổng thể */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.8);
-    transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 2000;
-    display: flex;
-    flex-direction: column;
-    border-right: 2px solid #f584b7;
-}
-
-.side-menu.open {
-    left: 0;
-}
-
-.side-menu h2 {
-    margin-top: 0;
-    font-size: 18px; /* Kích thước font nhỏ hơn */
-    text-align: center;
-    color: #ff85c1;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* Các link trong menu */
-.side-menu a {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Khoảng cách giữa icon và chữ nhỏ hơn */
-    color: #fff;
-    text-decoration: none;
-    margin: 5px 0; /* Khoảng cách giữa các mục nhỏ hơn */
-    font-size: 13px; /* Kích thước font nhỏ hơn */
-    padding: 8px 10px; /* Padding nhỏ hơn */
-    border-radius: 6px;
-    transition: 0.3s;
-    background-color: #2a2a2a;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.side-menu a:hover {
-    background-color: #f584b7;
-    color: #000;
-    transform: translateX(5px);
-    box-shadow: 0 4px 10px rgba(245, 132, 183, 0.4);
-}
-
-/* Phân chia các phần trong menu */
-.menu-section-divider {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin: 10px 0; /* Khoảng cách nhỏ hơn */
-}
-
-
-  </style>
+  <link rel="stylesheet" href="muachu_style.css"> 
 </head>
 <body>
 
   <button class="menu-toggle">☰</button>
 
   <div class="side-menu">
-    <h2>Danh Mục</h2>
-    <a href="index.html">🏠 Trang Chủ</a>
-    <a href="profile.html">🌚 Bio Của Admin</a>
-    <a href="banggia.html"><span>💰</span> Bảng Giá</a>
-    <a href="khodv.html"><span>📦</span> Kho Dịch Vụ Khách</a>
-     <a href="khoad.html"><span>📦</span> Kho Dịch Vụ Admin</a>
     
-    <div class="menu-section-divider"></div>
-    
-    <h2>Dịch Vụ Free</h2>
-    <a href="maqr.html"><span>✨</span> Tạo mã QR từ link</a>
-    <a href="muachu.html"><span>👩‍💻</span> Mưa chữ + Lời nhắn</a>
-    
-    <div class="menu-section-divider"></div>
-    
+      <a href="index.html">Trang Chủ</a>
+      <a href="banggia.html">Bảng Giá</a>
+      <a href="khodv.html">Kho Dịch Vụ Khách</a>
+      <a href="khoad.html">Kho Dịch Vụ Admin</a>
+      <a href="taoqr.html">Tạo QR từ link</a>
+      <a href="muachu.html">Mưa Chữ</a>
+      <a href="share.html">Nguồn Tài Nguyên Miễn Phí</a>
+   
    
   </div>
 
@@ -261,7 +56,8 @@ Tối đa 10 dòng"></textarea>
     let messageIndex = 0;
     let isStarted = false;
 
-    const texts = ['L', 'O', 'V', 'E'];
+    // Ký tự cho hiệu ứng mưa
+    const texts = ['L', 'O', 'V', 'E']; 
     const fontSize = 16;
     let columns;
     let drops;
@@ -285,13 +81,20 @@ Tối đa 10 dòng"></textarea>
 
     function drawRain() {
       if (!isStarted) return;
-      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      // Hiệu ứng mờ dần
+      ctx.fillStyle = 'rgba(0,0,0,0.05)'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#f584b7';
+      
+      // Màu chữ mưa
+      ctx.fillStyle = '#f584b7'; 
       ctx.font = `${fontSize}px Arial`;
+      
       for (let i = 0; i < drops.length; i++) {
-        const text = texts[Math.floor(Math.random() * texts.length)];
+        // Chọn ngẫu nhiên ký tự L, O, V, E
+        const text = texts[Math.floor(Math.random() * texts.length)]; 
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        
+        // Đặt lại giọt mưa khi nó rơi hết hoặc ngẫu nhiên
         if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
           drops[i] = 0;
         }

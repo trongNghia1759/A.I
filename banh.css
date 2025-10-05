@@ -1,0 +1,246 @@
+@import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
+@import url('https://fonts.cdnfonts.com/css/poppins');
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  background-color: #000;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ff3cac, #784ba0, #2b86c5, #ff3cac);
+  background-size: 400%;
+  animation: gradientBG 15s ease infinite;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hạt lấp lánh */
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png');
+  opacity: 0.15;
+  z-index: -1;
+  animation: sparkle 5s ease infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.25; }
+}
+
+/* Banner Section */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Button */
+#giftBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  background: linear-gradient(45deg, #ff3cac, #784ba0, #2b86c5);
+  color: white;
+  border: none;
+  padding: 20px 40px;
+  border-radius: 15px;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 0 20px #fff;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Text chúc mừng */
+#hbdText {
+  position: absolute;
+  bottom: 380px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 5;
+  text-shadow: 0 0 15px #ff0, 0 0 25px #f0f;
+  animation: glow 3s ease-in-out infinite;
+}
+
+#hbdText:not(.hidden) {
+  opacity: 1;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 15px #ff0, 0 0 25px #f0f; }
+  50% { text-shadow: 0 0 25px #ff0, 0 0 35px #f0f, 0 0 45px #0ff; }
+}
+
+.slider {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 200px;
+  height: 250px;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out 0.2s;
+  animation: autoRun 20s linear infinite;
+  z-index: 2;
+}
+
+.slider:not(.hidden) {
+  opacity: 1;
+  display: block; /* Đảm bảo hiển thị khi không còn hidden */
+}
+
+@keyframes autoRun {
+  from {
+    transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(0deg);
+  }
+  to {
+    transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(360deg);
+  }
+}
+
+.slider .item {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+             translateZ(550px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.slider .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Bánh sinh nhật */
+.cake {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1s ease-in-out 0.4s, transform 0.5s ease-in-out;
+}
+
+.cake:not(.hidden) {
+  opacity: 1;
+  animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-20px); }
+}
+
+/* Pháo hoa */
+#fireworks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Utility class */
+.hidden {
+  display: none;
+}
+
+/* Responsive: ≤ 1000px */
+@media screen and (max-width: 1000px) {
+  #hbdText {
+    bottom: 260px;
+    font-size: 2.2em;
+  }
+
+  .slider {
+    width: 160px;
+    height: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .slider .item {
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+               translateZ(300px);
+  }
+
+  .cake {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* Responsive: ≤ 700px */
+@media screen and (max-width: 700px) {
+  #hbdText {
+    bottom: 200px;
+    font-size: 1.8em;
+  }
+
+  .slider {
+    width: 100px;
+    height: 120px;
+  }
+
+  .slider .item {
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+               translateZ(180px);
+  }
+
+  .cake {
+    width: 180px;
+    height: 180px;
+  }
+}

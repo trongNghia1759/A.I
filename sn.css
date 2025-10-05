@@ -1,0 +1,227 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #ffccde);
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    color: #ff99b3;
+    font-size: 16px;
+    opacity: 0.7;
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+}
+
+.envelope {
+    position: relative;
+    width: 80vw;
+    max-width: 400px;
+    height: 300px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 10px;
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 2;
+}
+
+.envelope-flap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #ffe6f0;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+}
+
+.envelope.closed .envelope-flap {
+    transform: rotateX(0deg);
+}
+
+.envelope:not(.closed) .envelope-flap {
+    transform: rotateX(-180deg);
+}
+
+.letter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 5px;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.5s;
+}
+
+.envelope:not(.closed) .letter {
+    opacity: 1;
+}
+
+h1 {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 24px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(20, end) 1.5s both;
+}
+
+p {
+    line-height: 1.5;
+    font-size: 14px;
+    display: block;
+    white-space: normal;
+    margin: 5px 0;
+}
+
+p .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(10px);
+    animation: wordTyping 0.3s ease-out forwards;
+    margin-right: 4px;
+}
+
+p:hover {
+    color: #d9534f;
+    transition: color 0.3s ease;
+}
+
+.signature {
+    text-align: right;
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 10px;
+    font-family: 'Dancing Script', cursive;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.signature.show {
+    opacity: 1;
+}
+
+.next-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 1s ease, transform 0.3s ease;
+}
+
+.next-button.show {
+    opacity: 1;
+}
+
+.next-button:hover {
+    transform: scale(1.05);
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes wordTyping {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .letter,
+    h1,
+    .heart,
+    .envelope-flap,
+    p,
+    .signature,
+    .word {
+        animation: none;
+        opacity: 1;
+        transform: none;
+        width: 100%;
+        display: block;
+        white-space: normal;
+    }
+    p:hover,
+    .signature:hover,
+    .next-button:hover {
+        transform: none;
+        color: inherit;
+    }
+}
+
+@media (max-width: 600px) {
+    .envelope {
+        width: 90vw;
+        height: 250px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+}

@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mưa Ký Tự 🌦️</title>
-  <link rel="stylesheet" href="./style/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhập Mật Khẩu</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <div class="cloud"></div>
+    <div class="content">
+      <img src="images/avatar.jpg" alt="Avatar" class="avatar" />
+      <div class="password-section">
+        <h1>NHẬP PASS ĐI NGƯỜI ĐẸP</h1>
+        <input type="text" id="password" placeholder="Enter password" readonly />
+        <div class="keypad">
+          <button onclick="addNumber('1')">1</button>
+          <button onclick="addNumber('2')">2</button>
+          <button onclick="addNumber('3')">3</button>
+          <button onclick="addNumber('4')">4</button>
+          <button onclick="addNumber('5')">5</button>
+          <button onclick="addNumber('6')">6</button>
+          <button onclick="addNumber('7')">7</button>
+          <button onclick="addNumber('8')">8</button>
+          <button onclick="addNumber('9')">9</button>
+          <button onclick="addNumber('0')" class="zero">0</button>
+          <button onclick="clearPassword()" class="clear">✖</button>
+        </div>
+        <button onclick="checkPassword()" class="submit">✔</button>
+      </div>
+    </div>
   </div>
-  <script src="./style/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-

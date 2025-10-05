@@ -11,7 +11,7 @@ function addNumber(number) {
 }
 
 function clearPassword() {
-  password = "";
+  password = "17052009";
   passwordInput.value = password;
   passwordInput.classList.remove("active");
 }

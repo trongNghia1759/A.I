@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 
@@ -6,61 +6,261 @@
 
 <head>
 
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
 
-    <title>Loves</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kiểm Tra Bài Cũ</title>
+
+    <link
+
+        href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+
+        rel="stylesheet">
 
     <style>
+
+        :root {
+
+            --accent: #ff7f50;
+
+            --accent-2: #ff5722;
+
+        }
+
+
 
         html,
 
         body {
 
+            height: 100%;
+
             margin: 0;
 
-            padding: 0;
+            font-family: "Mali", cursive;
 
-            height: 100%;
+            background: #060614;
 
             overflow: hidden;
 
-            background: radial-gradient(ellipse at center, #000011 0%, #000000 100%);
+        }
 
-            font-family: 'Times New Roman', Times, serif;
 
-            user-select: none;
 
-            perspective: 1000px;
+        .stage {
 
-            cursor: pointer;
+            position: relative;
+
+            min-height: 100vh;
+
+            overflow: hidden;
 
         }
 
 
 
-        #galaxy {
+        canvas#starfield {
+
+            display: block;
+
+            width: 100%;
+
+            height: 100%;
+
+        }
+
+
+
+        .moon {
+
+            position: absolute;
+
+            top: 60px;
+
+            right: 100px;
+
+            width: 160px;
+
+            height: 160px;
+
+            background: radial-gradient(circle at 30% 30%, #fff, #f8f8f8 70%, #e0e0e0 100%);
+
+            border-radius: 50%;
+
+            /* sửa màu trăng */
+
+            box-shadow:
+
+                0 0 50px #ffffff7a,
+
+                0 0 80px rgba(255, 255, 255, 0.7),
+
+                0 0 100ox rgba(255, 255, 255, 0.4);
+
+            filter: drop-shadow(0 0 25px rgba(255, 255, 200, 0.8));
+
+            animation: moonGlow 6s ease-in-out infinite;
+
+            z-index: 10;
+
+        }
+
+
+
+        @media (max-width:600px) {
+
+            .moon {
+
+                top: 40px;
+
+                right: 14px;
+
+                width: 70px;
+
+                height: 70px;
+
+            }
+
+
+
+        }
+
+
+
+        #lantern-container {
 
             position: fixed;
 
-            top: 0;
+            bottom: 0;
 
             left: 0;
 
-            width: 100vw;
+            width: 100%;
 
-            height: 100vh;
+            height: 100%;
 
             pointer-events: none;
 
-            z-index: 1;
+            overflow: hidden;
+
+            z-index: 10;
 
         }
 
 
 
-        #rotatingContainer {
+        .lantern {
+
+            position: absolute;
+
+            pointer-events: auto;
+
+            width: 40px;
+
+            user-select: none;
+
+        }
+
+
+
+        @keyframes swing {
+
+            0% {
+
+                transform: rotate(-5deg);
+
+            }
+
+
+
+            50% {
+
+                transform: rotate(5deg);
+
+            }
+
+
+
+            100% {
+
+                transform: rotate(-5deg);
+
+            }
+
+        }
+
+
+
+        .swing {
+
+            animation: swing 2s ease-in-out infinite;
+
+        }
+
+
+
+        #hint {
+
+            position: fixed;
+
+            bottom: 80px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background: rgba(0, 0, 0, 0);
+
+            color: #ffa722;
+
+            padding: 10px 20px;
+
+            border-radius: 10px;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            opacity: 0;
+
+            transition: opacity 0.5s;
+
+            z-index: 1000;
+
+            pointer-events: none;
+
+            text-align: center;
+
+            white-space: nowrap;
+
+            text-shadow:
+
+                0 0 15px #ff8a50,
+
+                0 0 20px #ffd180;
+
+
+
+        }
+
+
+
+        @media (max-width: 600px) {
+
+            #hint {
+
+                font-size: 22px;
+
+                padding: 8px 12px;
+
+            }
+
+        }
+
+
+
+        #wish-popup {
 
             position: fixed;
 
@@ -68,60 +268,172 @@
 
             left: 50%;
 
-            width: 100vw;
+            transform: translate(-50%, -50%);
 
-            height: 100vh;
+            background: rgba(255, 255, 255, 0.96);
+
+            color: #ff8d22;
+
+            padding: 35px 40px;
+
+            border-radius: 12px;
+
+            font-size: 1.8rem;
+
+            font-weight: 700;
+
+            display: none;
+
+            z-index: 9999;
+
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
+
+            text-align: center;
+
+            max-width: 60%;
+
+            width: auto;
+
+            box-sizing: border-box;
+
+            pointer-events: auto;
+
+            text-shadow:
+
+                0 0 25px #ffd180;
+
+            box-shadow:
+
+                0 0 20px #ff8a50,
+
+                0 0 25px #ffd180;
+
+        }
+
+
+
+        @media (max-width: 600px) {
+
+            #wish-popup {
+
+                font-size: 1.2rem;
+
+                padding: 20px 25px;
+
+                max-width: 80%;
+
+                width: 80%;
+
+            }
+
+        }
+
+
+
+        .controls {
+
+            position: fixed;
+
+            left: 18px;
+
+            top: 18px;
+
+            z-index: 10;
+
+            color: #fff;
+
+            font-size: 14px;
+
+            background: rgba(0, 0, 0, 0.2);
+
+            padding: 8px 12px;
+
+            border-radius: 10px;
+
+        }
+
+
+
+        .music-toggle {
+
+            cursor: pointer;
+
+            margin-left: 10px;
+
+            color: #fff;
+
+            opacity: 0.95;
+
+        }
+
+
+
+        #bottom-image-container {
+
+            position: fixed;
+
+            bottom: 0;
+
+            right: 20px;
+
+            transform: none;
+
+            z-index: 5;
 
             pointer-events: none;
 
-            transform-style: preserve-3d;
+        }
 
-            transform-origin: center center;
 
-            z-index: 2;
 
-            transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+        #bottom-image-container img {
+
+            height: 80px;
+
+            width: auto;
+
+            display: block;
 
         }
 
 
 
-        .text-particle {
+        @media (max-width: 600px) {
 
-            position: absolute;
+            #bottom-image-container img {
 
-            white-space: nowrap;
+                height: 20px;
 
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
-
-            will-change: transform, opacity;
-
-            user-select: none;
+            }
 
         }
-
-
-
-        .image-particle {
-
-            position: absolute;
-
-            pointer-events: none;
-
-            max-width: 50px;
-
-            max-height: 50px;
-
-            will-change: transform, opacity;
-
-            user-select: none;
-
-            border-radius: 5px;
-
-            filter: drop-shadow(0 0 4px #fff);
-
-        }
-
+#play-music-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #ff9f43, #ff6b6b);
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 24px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 150, 80, 0.7);
+    z-index: 2000;
+    transition: 0.3s;
+}
+#play-music-btn:hover {
+    transform: translateX(-50%) scale(1.08);
+    box-shadow: 0 0 20px rgba(255, 180, 100, 0.9);
+}
+@media (max-width:600px) {
+    #play-music-btn {
+        font-size: 16px;
+        padding: 8px 18px;
+    }
+}
     </style>
 
 </head>
@@ -130,341 +442,424 @@
 
 <body>
 
+    <div class="stage">
 
-
-    <div id="galaxy"></div>
-
-    <div id="rotatingContainer"></div>
+        <canvas id="starfield"></canvas>
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+        <div class="moon" aria-hidden="true"></div>
+
+
+
+        <div id="lantern-container"></div>
+
+
+
+        <div id="wish-popup" role="dialog" aria-live="polite"></div>
+
+
+
+        <div id="bottom-image-container">
+
+            <!-- <img src="./ass.png" alt="Trang trí Trung Thu" /> -->
+
+        </div>
+
+
+
+        <!-- Sử phần hướng dẫn ở đây -->
+
+        <div id="hint">Chạm vào để random<br>Học Sinh Sợ Giáo Viên Vui<br><br><br><br><br><br><br><br><br></div>
+        <button id="play-music-btn">Click Phát nhạc 🌚</button>
+
+
+
+        <!-- Nhạc sửa nhạc nền -->
+        
+
+        <audio id="bg-music" loop>
+
+            <source src="a.mp3" type="audio/mp3">
+
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
+
+        </audio>
+
+    </div>
+
+
 
     <script>
 
-        const rotatingContainer = document.getElementById('rotatingContainer');
+        // ===== Canvas sao và sao băng =====
 
-        const galaxy = document.getElementById('galaxy');
+        const canvas = document.getElementById("starfield");
 
+        const ctx = canvas.getContext("2d");
 
-
-        const messages = [
-
-            "Em à",
-
-            "Em là người đặc biệt 💖",
-
-            "Anh yêu em",
-
-            "Mãi yêu"
-
-        ];
-
-        const textColor = "#ff7487";
-
-        const imageURL = "img1.png";
-
-        const icons = ["💓", "❤", "💗"];
+        let w, h, stars = [], meteors = [];
 
 
 
-        const maxParticles = 150;
+        function resizeCanvas() {
 
-        const particleInterval = 800;
+            w = canvas.width = innerWidth;
 
-        const activeParticles = new Set();
+            h = canvas.height = innerHeight;
 
+            stars = [];
 
+            const count = Math.round((w * h) / 2200);
 
-        function createTextParticle() {
+            for (let i = 0; i < count; i++) {
 
-            if (activeParticles.size >= maxParticles) return;
+                stars.push({
 
-            const el = document.createElement('div');
+                    x: Math.random() * w,
 
-            const isIcon = Math.random() < 0.3;
+                    y: Math.random() * h,
 
-            el.className = 'text-particle';
+                    r: Math.random() * 0.9 + 0.1,
 
-            el.textContent = isIcon
+                    a: Math.random() * 0.8 + 0.2,
 
-                ? icons[Math.floor(Math.random() * icons.length)]
+                    t: Math.random() * 0.02 + 0.002
 
-                : messages[Math.floor(Math.random() * messages.length)];
-
-            el.style.fontSize = (isIcon ? 20 : 18) + Math.random() * 10 + 'px';
-
-            el.style.color = textColor;
-
-            el.style.opacity = 0;
-
-
-
-            rotatingContainer.appendChild(el);
-
-
-
-            const w = el.offsetWidth || 50;
-
-            el.style.left = Math.random() * (window.innerWidth - w) + 'px';
-
-            const translateZ = -Math.random() * 300;
-
-            const startY = -30, endY = window.innerHeight + 30;
-
-            const duration = 8000 + Math.random() * 4000;
-
-            const t0 = performance.now();
-
-
-
-            function anim(t) {
-
-                const dt = t - t0;
-
-                if (dt < duration) {
-
-                    const p = dt / duration;
-
-                    el.style.transform = `translateY(${startY + p * (endY - startY)}px) translateZ(${translateZ}px)`;
-
-                    el.style.opacity = p < 0.1 ? p * 10 : (p > 0.9 ? (1 - p) * 10 : 1);
-
-                    requestAnimationFrame(anim);
-
-                } else {
-
-                    el.remove();
-
-                    activeParticles.delete(el);
-
-                }
+                });
 
             }
 
-
-
-            activeParticles.add(el);
-
-            requestAnimationFrame(anim);
-
         }
 
 
 
-        function createImageParticle() {
+        function drawStars() {
 
-            if (activeParticles.size >= maxParticles) return;
+            ctx.clearRect(0, 0, w, h);
 
-            const el = document.createElement('img');
+            for (const s of stars) {
 
-            el.src = imageURL;
+                s.a += (Math.random() > 0.5 ? 1 : -1) * s.t;
 
-            el.className = 'image-particle';
+                s.a = Math.max(0.05, Math.min(1, s.a));
 
-            el.style.opacity = 0;
+                ctx.beginPath();
 
+                ctx.globalAlpha = s.a;
 
+                ctx.fillStyle = "#fff";
 
-            rotatingContainer.appendChild(el);
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
 
-
-
-            const w = el.offsetWidth || 40;
-
-            el.style.left = Math.random() * (window.innerWidth - w) + 'px';
-
-
-
-            const translateZ = -Math.random() * 300;
-
-            const startY = -50, endY = window.innerHeight + 50;
-
-            const duration = 8000 + Math.random() * 4000;
-
-            const t0 = performance.now();
-
-
-
-            function anim(t) {
-
-                const dt = t - t0;
-
-                if (dt < duration) {
-
-                    const p = dt / duration;
-
-                    el.style.transform = `translateY(${startY + p * (endY - startY)}px) translateZ(${translateZ}px)`;
-
-                    el.style.opacity = p < 0.1 ? p * 10 : (p > 0.9 ? (1 - p) * 10 : 1);
-
-                    requestAnimationFrame(anim);
-
-                } else {
-
-                    el.remove();
-
-                    activeParticles.delete(el);
-
-                }
+                ctx.fill();
 
             }
 
-
-
-            activeParticles.add(el);
-
-            requestAnimationFrame(anim);
+            ctx.globalAlpha = 1;
 
         }
 
 
 
-        const scene = new THREE.Scene();
+        function createMeteor() {
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const startX = Math.random() * w;
 
-        camera.position.z = 150;
+            const startY = Math.random() * (h / 3);
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            const speed = Math.random() * 10 + 6;
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+            meteors.push({
 
-        renderer.setClearColor(0x000000, 0);
+                x: startX,
 
-        galaxy.appendChild(renderer.domElement);
+                y: startY,
 
+                vx: speed + 6,
 
+                vy: speed / 2,
 
-        const starsCount = 500;
+                len: Math.random() * 120 + 100,
 
-        const geometry = new THREE.BufferGeometry();
-
-        const positions = new Float32Array(starsCount * 3);
-
-        for (let i = 0; i < starsCount; i++) {
-
-            positions[i * 3] = (Math.random() - 0.5) * 400;
-
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 400;
-
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 400;
-
-        }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-
-
-        const textureLoader = new THREE.TextureLoader();
-
-        const starTexture = textureLoader.load('https://threejs.org/examples/textures/sprites/disc.png');
-
-
-
-        const material = new THREE.PointsMaterial({
-
-            color: 0xffffff,
-
-            size: 0.5,
-
-            map: starTexture,
-
-            transparent: true,
-
-            alphaTest: 0.2,
-
-            depthWrite: false
-
-        });
-
-
-
-        const stars = new THREE.Points(geometry, material);
-
-        scene.add(stars);
-
-
-
-        function animateStars() {
-
-            requestAnimationFrame(animateStars);
-
-            renderer.render(scene, camera);
-
-        }
-
-        animateStars();
-
-
-
-        window.addEventListener('DOMContentLoaded', () => {
-
-            setInterval(() => {
-
-                for (let i = 0; i < 4; i++) {
-
-                    createTextParticle();
-
-                    if (Math.random() < 0.5) createImageParticle();
-
-                }
-
-            }, 300);
-
-
-
-        });
-
-
-
-        let audioStarted = false;
-
-        document.body.addEventListener('click', () => {
-
-            if (audioStarted) return;
-
-            const audio = new Audio('./e.mp3');
-
-            audio.loop = true;
-
-            audio.play().catch(() => {
-
-                console.log("Không thể phát nhạc tự động.");
+                a: 1
 
             });
 
-            audioStarted = true;
+        }
+
+
+
+        function drawMeteors() {
+
+            for (let i = meteors.length - 1; i >= 0; i--) {
+
+                const m = meteors[i];
+
+                const x2 = m.x - m.len;
+
+                const y2 = m.y - m.len / 2;
+
+                const g = ctx.createLinearGradient(m.x, m.y, x2, y2);
+
+                g.addColorStop(0, `rgba(255,255,255,${m.a})`);
+
+                g.addColorStop(1, "rgba(255,255,255,0)");
+
+                ctx.strokeStyle = g;
+
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+
+                ctx.moveTo(m.x, m.y);
+
+                ctx.lineTo(x2, y2);
+
+                ctx.stroke();
+
+                m.x += m.vx;
+
+                m.y += m.vy;
+
+                m.a -= 0.02;
+
+                if (m.a <= 0 || m.x > w + 200 || m.y > h + 200) meteors.splice(i, 1);
+
+            }
+
+            ctx.strokeStyle = "#fff";
+
+            ctx.lineWidth = 1;
+
+        }
+
+
+
+        function loop() {
+
+            drawStars();
+
+            drawMeteors();
+
+            if (Math.random() < 0.01) createMeteor();
+
+            requestAnimationFrame(loop);
+
+        }
+
+
+
+        window.addEventListener("resize", resizeCanvas);
+
+        resizeCanvas();
+
+        loop();
+
+
+
+       // ===== Đèn lồng và lời chúc =====
+const lanternContainer = document.getElementById("lantern-container");
+
+// Danh sách các ảnh đèn lồng
+const lanternImages = [
+  "./den1.png",
+  "./den2.png"
+];
+
+// Lời chúc
+const wishes = [
+  "Tên Học Sinh 1",
+  
+  "Tên Học Sinh 2",
+  
+  "Tên Học Sinh 3",
+  
+  "Tên Học Sinh 4",
+  
+  "Tên Học Sinh 5",
+  
+  "Tên Học Sinh 6",
+  
+  "Tên Học Sinh 7",
+  
+  "Tên Học Sinh 8",
+  
+  "Tên Học Sinh 9",
+  
+  "Tên Học Sinh 10",
+  
+  "Tên Học Sinh 11",
+  
+  "Tên Học Sinh 12",
+  
+  "Tên Học Sinh 13",
+  
+  "Tên Học Sinh 14",
+  
+  "Tên Học Sinh 15",
+  
+];
+
+function createLantern() {
+  const lantern = document.createElement("img");
+
+  // Chọn ngẫu nhiên 1 ảnh trong danh sách
+  const randomSrc = lanternImages[Math.floor(Math.random() * lanternImages.length)];
+  lantern.src = randomSrc;
+  lantern.className = "lantern swing";
+
+  const layer = Math.floor(Math.random() * 3) + 1;
+  let size = 40, duration = 10000, opacity = 0.8;
+
+  if (layer === 1) {
+    size = 20 + Math.random() * 20;
+    duration = 14000 + Math.random() * 5000;
+    opacity = 0.5;
+  } else if (layer === 2) {
+    size = 30 + Math.random() * 30;
+    duration = 12000 + Math.random() * 4000;
+    opacity = 0.7;
+  } else {
+    size = 40 + Math.random() * 40;
+    duration = 10000 + Math.random() * 3000;
+    opacity = 0.95;
+  }
+
+  lantern.style.width = size + "px";
+  lantern.style.left = Math.random() * 90 + "vw";
+  lantern.style.bottom = "0px";
+  lantern.style.opacity = opacity;
+
+  lanternContainer.appendChild(lantern);
+
+  const drift = Math.random() * 140 - 70;
+  const up = 120 + Math.random() * 40;
+  lantern.animate(
+    [
+      { transform: "translate(0,0)", opacity: opacity },
+      { transform: `translate(${drift}px, -${up}vh)`, opacity: 0 }
+    ],
+    { duration: duration, easing: "linear", fill: "forwards" }
+  );
+
+  setTimeout(() => lantern.remove(), duration);
+
+  lantern.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const wishPopup = document.getElementById("wish-popup");
+    wishPopup.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+    wishPopup.style.display = "block";
+  });
+}
+
+// Mỗi nửa giây tạo 1 đèn, mỗi đèn ngẫu nhiên ảnh khác nhau
+setInterval(createLantern, 500);
+
+       // ===== Nhạc nền: bấm nút mới phát =====
+const bg = document.getElementById("bg-music");
+const playBtn = document.getElementById("play-music-btn");
+
+playBtn.addEventListener("click", () => {
+    bg.volume = 0;
+    bg.play().then(() => {
+        let v = 0;
+        const fadeIn = setInterval(() => {
+            v += 0.05;
+            if (v >= 0.9) {
+                v = 0.9;
+                clearInterval(fadeIn);
+            }
+            bg.volume = v;
+        }, 120);
+
+        // Ẩn nút sau khi phát
+        playBtn.style.display = "none";
+    }).catch((err) => {
+        alert("Không thể phát nhạc. Trình duyệt của bạn có thể chặn tự động phát!");
+        console.error(err);
+    });
+});
+
+        // ===== Ẩn popup khi click ngoài =====
+
+        document.addEventListener("click", (e) => {
+
+            const pop = document.getElementById("wish-popup");
+
+            if (pop && pop.style.display === "block") {
+
+                pop.style.display = "none";
+
+            }
 
         });
 
 
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener("pointerdown", function startMusicOnce() {
 
-            const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+            if (!musicStarted && bg) {
 
-            const rotY = ((e.clientX - cx) / cx) * 10;
+                bg.volume = 0;
 
-            const rotX = (-(e.clientY - cy) / cy) * 10;
+                bg.play().then(() => {
 
-            rotatingContainer.style.transform =
+                    let v = 0;
 
-                `translate(-50%, -50%) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+                    const fadeIn = setInterval(() => {
+
+                        v += 0.05;
+
+                        if (v >= 0.9) {
+
+                            v = 0.9;
+
+                            clearInterval(fadeIn);
+
+                        }
+
+                        bg.volume = v;
+
+                    }, 120);
+
+                    musicStarted = true;
+
+                }).catch((e) => {
+
+                    console.log("Không thể phát nhạc:", e);
+
+                });
+
+            }
+
+            document.removeEventListener("pointerdown", startMusicOnce);
 
         });
 
 
 
-        window.addEventListener('resize', () => {
+        setTimeout(() => {
 
-            camera.aspect = window.innerWidth / window.innerHeight;
+            if (hint) {
 
-            camera.updateProjectionMatrix();
+                hint.style.opacity = "1";
 
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            }
 
-        });
+
+
+            setTimeout(() => {
+
+                if (hint) {
+
+                    hint.style.opacity = "0";
+
+                }
+
+            }, 5000);
+
+        }, 1000);
 
     </script>
 
